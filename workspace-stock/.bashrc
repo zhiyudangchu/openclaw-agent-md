@@ -1,0 +1,2 @@
+export FINNHUB_API_KEY="d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg"
+export TUSHARE_TOKEN="68442b378fd881f50cc6ae402e7277b6f46061bcc7b1df17b4ca6318"

@@ -1,0 +1,15 @@
+{
+  "id": "9c7cfc84-93c5-4c0a-bd86-00bc576b78f5",
+  "enqueuedAt": 1772979542948,
+  "channel": "feishu",
+  "to": "ou_9d907d39fb19b50579ba289b30041fc5",
+  "payloads": [
+    {
+      "text": "Nothing new - all clear for now.",
+      "mediaUrls": []
+    }
+  ],
+  "retryCount": 5,
+  "lastAttemptAt": 1773035107385,
+  "lastError": "Request failed with status code 400"
+}

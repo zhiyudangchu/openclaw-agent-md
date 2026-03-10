@@ -1,0 +1,130 @@
+{
+  "providers": {
+    "custom-dashscope-aliyuncs-com": {
+      "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "apiKey": "sk-8523fc87bcc3417fa959d6186f09d7ac",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "qwen3.5-plus",
+          "name": "qwen3.5-plus (Custom Provider)",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 256000,
+          "maxTokens": 254000
+        },
+        {
+          "id": "qwen-omni-turbo",
+          "name": "qwen-omni-turbo (Custom Provider)",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 32000,
+          "maxTokens": 30000
+        },
+        {
+          "id": "qwen3.5-122b-a10b",
+          "name": "qwen3.5-122b-a10b (Custom Provider)",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 256000,
+          "maxTokens": 64000
+        },
+        {
+          "id": "qwen3.5-flash",
+          "name": "qwen3.5-flash (Custom Provider)",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 64000
+        },
+        {
+          "id": "deepseek-r1",
+          "name": "deepseek-r1 (Custom Provider)",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 256000,
+          "maxTokens": 16000
+        },
+        {
+          "id": "qwen3.5-35b-a3b",
+          "name": "qwen3.5-35b-a3b (Custom Provider)",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 256000,
+          "maxTokens": 254000
+        },
+        {
+          "id": "qwen3.5-397b-a17b",
+          "name": "qwen3.5-397b-a17b (Custom Provider)",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 256000,
+          "maxTokens": 254000,
+          "api": "openai-completions"
+        }
+      ]
+    }
+  }
+}

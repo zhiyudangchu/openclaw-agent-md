@@ -1,0 +1,15 @@
+{
+  "id": "ee02b53d-65c7-4167-af12-3124b00f703a",
+  "enqueuedAt": 1773030998049,
+  "channel": "feishu",
+  "to": "ou_9d907d39fb19b50579ba289b30041fc5",
+  "payloads": [
+    {
+      "text": "Let me check if there's any existing stock data in the system:",
+      "mediaUrls": []
+    }
+  ],
+  "retryCount": 5,
+  "lastAttemptAt": 1773040487197,
+  "lastError": "Request failed with status code 400"
+}

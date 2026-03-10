@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "stock-watcher": {
+      "version": "1.0.0",
+      "installedAt": 1773039154177
+    },
+    "tushare-finance": {
+      "version": "2.0.6",
+      "installedAt": 1772780666920
+    },
+    "tushare-data": {
+      "version": "1.0.7",
+      "installedAt": 1773034037489
+    }
+  }
+}

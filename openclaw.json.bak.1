@@ -1,0 +1,476 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.7",
+    "lastTouchedAt": "2026-03-09T14:51:15.912Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-09T14:51:15.892Z",
+    "lastRunVersion": "2026.3.7",
+    "lastRunCommand": "configure",
+    "lastRunMode": "local"
+  },
+  "browser": {
+    "enabled": true,
+    "executablePath": "/usr/bin/google-chrome-stable",
+    "headless": false,
+    "defaultProfile": "openclaw"
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "custom-dashscope-aliyuncs-com": {
+        "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "apiKey": "sk-8523fc87bcc3417fa959d6186f09d7ac",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "qwen3.5-plus",
+            "name": "qwen3.5-plus (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 254000
+          },
+          {
+            "id": "qwen-omni-turbo",
+            "name": "qwen-omni-turbo (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32000,
+            "maxTokens": 30000
+          },
+          {
+            "id": "qwen3.5-122b-a10b",
+            "name": "qwen3.5-122b-a10b (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 64000
+          },
+          {
+            "id": "qwen3.5-flash",
+            "name": "qwen3.5-flash (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 1000000,
+            "maxTokens": 64000
+          },
+          {
+            "id": "deepseek-r1",
+            "name": "deepseek-r1 (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 16000
+          },
+          {
+            "id": "qwen3.5-35b-a3b",
+            "name": "qwen3.5-35b-a3b (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 254000
+          },
+          {
+            "id": "qwen3.5-397b-a17b",
+            "name": "qwen3.5-397b-a17b (Custom Provider)",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 16000,
+            "maxTokens": 4096
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "custom-dashscope-aliyuncs-com/qwen3.5-397b-a17b",
+        "fallbacks": [
+          "custom-dashscope-aliyuncs-com/qwen3.5-plus",
+          "custom-dashscope-aliyuncs-com/qwen3.5-flash",
+          "custom-dashscope-aliyuncs-com/qwen-omni-turbo"
+        ]
+      },
+      "models": {
+        "custom-dashscope-aliyuncs-com/qwen3.5-plus": {
+          "alias": "qwen3.5-plus"
+        },
+        "custom-dashscope-aliyuncs-com/qwen-omni-turbo": {
+          "alias": "qwen-omni-turbo"
+        },
+        "custom-dashscope-aliyuncs-com/qwen3.5-122b-a10b": {
+          "alias": "qwen3.5-122b-a10b"
+        },
+        "custom-dashscope-aliyuncs-com/qwen3.5-flash": {
+          "alias": "qwen3.5-flash"
+        },
+        "custom-dashscope-aliyuncs-com/deepseek-r1": {
+          "alias": "deepseek-r1"
+        },
+        "custom-dashscope-aliyuncs-com/qwen3.5-35b-a3b": {
+          "alias": "qwen3.5-35b-a3b"
+        },
+        "custom-dashscope-aliyuncs-com/qwen3.5-397b-a17b": {
+          "alias": "qwen3.5-397b-a17b"
+        }
+      },
+      "workspace": "/home/openclaw/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "workspace": "/home/openclaw/.openclaw/workspace",
+        "sandbox": {
+          "mode": "off"
+        }
+      },
+      {
+        "id": "main-stock",
+        "name": "main-stock",
+        "workspace": "/home/openclaw/.openclaw/workspace-main-stock",
+        "heartbeat": {
+          "every": "30m",
+          "target": "feishu",
+          "to": "ou_9d907d39fb19b50579ba289b30041fc5",
+          "prompt": "如果HEARTBEAT.md存在（工作区上下文），请读取它。严格遵守。不要从之前的聊天中推断或重复旧任务。如果没有什么需要注意的，请回复HEARTBEAT_OK。"
+        },
+        "sandbox": {
+          "mode": "off"
+        }
+      },
+      {
+        "id": "main-stock-ding",
+        "name": "main-stock-ding",
+        "workspace": "/home/openclaw/.openclaw/workspace-main-stock-ding",
+        "sandbox": {
+          "mode": "off"
+        }
+      },
+      {
+        "id": "public",
+        "name": "public",
+        "sandbox": {
+          "mode": "all",
+          "workspaceAccess": "ro",
+          "scope": "session",
+          "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
+          "docker": {
+            "image": "openclaw-sandbox-browser:bookworm-slim",
+            "containerPrefix": "dingtalk-public-sbx-",
+            "workdir": "/workspace",
+            "readOnlyRoot": false,
+            "network": "bridge",
+            "user": "1000:1000",
+            "setupCommand": "apt-get update && apt-get install -y git curl jq"
+          }
+        },
+        "tools": {
+          "sandbox": {
+            "tools": {
+              "allow": [
+                "group:runtime",
+                "group:fs",
+                "group:sessions",
+                "group:memory"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "stock",
+        "name": "stock",
+        "model": "custom-dashscope-aliyuncs-com/qwen3.5-122b-a10b",
+        "sandbox": {
+          "mode": "all",
+          "workspaceAccess": "rw",
+          "scope": "session",
+          "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
+          "docker": {
+            "image": "openclaw-sandbox-common:bookworm-slim-diy",
+            "containerPrefix": "feishu-sbx-",
+            "workdir": "/home/sandbox",
+            "readOnlyRoot": false,
+            "network": "bridge",
+            "user": "1000:1000",
+            "env": {
+              "FINNHUB_API_KEY": "d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg",
+              "TUSHARE_TOKEN": "68442b378fd881f50cc6ae402e7277b6f46061bcc7b1df17b4ca6318"
+            },
+            "setupCommand": "echo \"export FINNHUB_API_KEY=\\\"d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg\\\"\" >> ~/.bashrc && echo \"export TUSHARE_TOKEN=\\\"68442b378fd881f50cc6ae402e7277b6f46061bcc7b1df17b4ca6318\\\"\" >> ~/.bashrc && source ~/.bashrc"
+          }
+        },
+        "tools": {
+          "sandbox": {
+            "tools": {
+              "allow": [
+                "group:runtime",
+                "group:fs",
+                "group:sessions",
+                "group:memory"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": false
+      },
+      "fetch": {
+        "enabled": true
+      }
+    }
+  },
+  "bindings": [
+    {
+      "agentId": "public",
+      "match": {
+        "channel": "dingtalk",
+        "accountId": "default"
+      }
+    },
+    {
+      "agentId": "main-stock",
+      "match": {
+        "channel": "feishu",
+        "accountId": "stock"
+      }
+    },
+    {
+      "agentId": "stock",
+      "match": {
+        "channel": "feishu",
+        "accountId": "main"
+      }
+    },
+    {
+      "agentId": "main-stock-ding",
+      "match": {
+        "channel": "dingtalk",
+        "accountId": "default"
+      }
+    }
+  ],
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-account-channel-peer",
+    "identityLinks": {
+      "alice": [
+        "feishu:ou_6c2d97130e5689add2b99ef3eadf02aa",
+        "dingtalk:254325000422701087"
+      ]
+    }
+  },
+  "cron": {
+    "enabled": true
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "feishu": {
+      "enabled": true,
+      "defaultAccount": "main",
+      "accounts": {
+        "main": {
+          "appId": "cli_a9280bd1dae31bef",
+          "appSecret": "IoGwVOlXvNLWRkUjcXom3d1tQPzoGz1v"
+        },
+        "stock": {
+          "appId": "cli_a92d6c78990a1bb6",
+          "appSecret": "CqJiOLUUZRhwQf1VCK1Zce8oCCegpyyP"
+        },
+        "default": {
+          "dmPolicy": "open",
+          "allowFrom": [
+            "*"
+          ]
+        }
+      }
+    },
+    "dingtalk": {
+      "enabled": true,
+      "clientId": "ding9g0j6bjlc1qrpmat",
+      "clientSecret": "bLfyuhophshCKcF3G9Ko9Lyjq0-WoteKMUGJo7dOUH71LfHjgJqaQbDrRdKs2vI4",
+      "robotCode": "ding9g0j6bjlc1qrpmat",
+      "corpId": "ding41959e43e16a3d1b4ac5d6980864d335",
+      "agentId": "4315500364",
+      "dmPolicy": "open",
+      "groupPolicy": "open",
+      "messageType": "card",
+      "debug": false,
+      "allowFrom": [
+        "*"
+      ],
+      "cardTemplateId": "75842a35-9328-41e2-b4b9-c68f54e7383e.schema",
+      "cardTemplateKey": "content",
+      "maxReconnectCycles": 10
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "263e60f7e59f5275aab570426d23ede20c5656a9d4e33058"
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "calendar.add",
+        "contacts.add",
+        "reminders.add"
+      ]
+    }
+  },
+  "skills": {
+    "load": {
+      "watch": true,
+      "watchDebounceMs": 250
+    },
+    "install": {
+      "nodeManager": "npm"
+    },
+    "entries": {
+      "finnhub": {
+        "enabled": true,
+        "apiKey": "d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg",
+        "env": {
+          "FINNHUB_API_KEY": "d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg"
+        }
+      }
+    }
+  },
+  "plugins": {
+    "allow": [
+      "dingtalk",
+      "feishu"
+    ],
+    "entries": {
+      "dingtalk": {
+        "enabled": true
+      },
+      "feishu": {
+        "enabled": true
+      }
+    },
+    "installs": {
+      "dingtalk": {
+        "source": "npm",
+        "spec": "@soimy/dingtalk",
+        "installPath": "/home/openclaw/.openclaw/extensions/dingtalk",
+        "version": "3.2.0",
+        "resolvedName": "@soimy/dingtalk",
+        "resolvedVersion": "3.2.0",
+        "resolvedSpec": "@soimy/dingtalk@3.2.0",
+        "integrity": "sha512-6JDDZit0WPy3xUC0rNQVMQEKMXcbjnN5r0/Rq44xJ3IOFceQnZVhLXgnahQsuw/03GJAxNl6FKb0PTxm1R7ZIw==",
+        "shasum": "9b32caab49d1e1c76ab41d39b15175ff76f0e112",
+        "resolvedAt": "2026-03-07T15:55:34.945Z",
+        "installedAt": "2026-03-07T15:56:09.444Z"
+      }
+    }
+  }
+}

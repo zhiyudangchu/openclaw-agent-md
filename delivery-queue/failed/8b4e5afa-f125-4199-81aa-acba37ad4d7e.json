@@ -1,0 +1,24 @@
+{
+  "id": "8b4e5afa-f125-4199-81aa-acba37ad4d7e",
+  "enqueuedAt": 1773027215983,
+  "channel": "feishu",
+  "to": "user:open_id",
+  "accountId": "stock",
+  "payloads": [
+    {
+      "text": "🔔 **股价预警系统已配置完成**\n\n✅ **监控规则：**\n• 📉 下跌 > 3% → 触发预警\n• 📈 上涨 > 5% → 触发预警\n\n💾 **当前监控 13 只股票：**\n- A 股 (11 只): 中国石油、中海油服、广汇能源、海油工程、石化机械、山东黄金、西部黄金、赤峰黄金、银泰黄金、金贵银业、紫金矿业\n- 港股/美股 (2 只): 蔚来-SW(9866.HK)、苹果 (AAPL)*\n\n*注：港股和美股数据源暂时不可用，A 股通过 Tushare Pro 获取实时数据\n\n📊 **数据来源：**\n- A 股优先使用 Tushare Pro API\n- 备用方案：同花顺网页/API\n\n⚙️ **运行状态：**\n系统每轮自动检查自选股行情，仅在触发预警阈值时发送通知。\n\n---\n系统日志: `~/.clawdbot/stock_watcher/price_alert_cron.log`",
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main-stock:feishu:stock:direct:open_id",
+    "agentId": "main-stock",
+    "text": "🔔 **股价预警系统已配置完成**\n\n✅ **监控规则：**\n• 📉 下跌 > 3% → 触发预警\n• 📈 上涨 > 5% → 触发预警\n\n💾 **当前监控 13 只股票：**\n- A 股 (11 只): 中国石油、中海油服、广汇能源、海油工程、石化机械、山东黄金、西部黄金、赤峰黄金、银泰黄金、金贵银业、紫金矿业\n- 港股/美股 (2 只): 蔚来-SW(9866.HK)、苹果 (AAPL)*\n\n*注：港股和美股数据源暂时不可用，A 股通过 Tushare Pro 获取实时数据\n\n📊 **数据来源：**\n- A 股优先使用 Tushare Pro API\n- 备用方案：同花顺网页/API\n\n⚙️ **运行状态：**\n系统每轮自动检查自选股行情，仅在触发预警阈值时发送通知。\n\n---\n系统日志: `~/.clawdbot/stock_watcher/price_alert_cron.log`"
+  },
+  "retryCount": 5,
+  "lastAttemptAt": 1773040485575,
+  "lastError": "Request failed with status code 400"
+}

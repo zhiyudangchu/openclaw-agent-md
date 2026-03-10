@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "02bf7045-515c-463f-99ea-6c3ffd327859",
+      "agentId": "main-stock",
+      "name": "股价预警-zhang",
+      "enabled": false,
+      "createdAtMs": 1773028273657,
+      "updatedAtMs": 1773031170887,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/5 9-15 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "使用 stock-watcher 和 tushare-finance 监控自选股，TUSHARE_TOKEN我放到了env里。预警规则如下：下跌超3%触发预警，上涨超5%触发预警，务必要确保数据的准确性，获取数据后通过东方财富网（quote.eastmoney.com）进行校验；参考~/.openclaw/workspace-main-stock/stock/report-template.txt模版回复我"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_144623d3a3b4a119305355db7813bb31"
+      },
+      "state": {
+        "lastRunAtMs": 1773030300001,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 145399,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "1063e27f-ff88-49f1-916a-233ecc97da0d",
+      "agentId": "main-stock",
+      "name": "股价预警-wang",
+      "enabled": false,
+      "createdAtMs": 1773028280827,
+      "updatedAtMs": 1773031184190,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/5 9-15 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "使用 stock-watcher 和 tushare-finance 监控自选股，TUSHARE_TOKEN我放到了env里。预警规则如下：下跌超3%触发预警，上涨超5%触发预警，务必要确保数据的准确性，获取数据后通过东方财富网（quote.eastmoney.com）进行校验；参考~/.openclaw/workspace-main-stock/stock/report-template.txt模版回复我"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_0737da20bef21e4dff04d2b83f927208"
+      },
+      "state": {
+        "lastRunAtMs": 1773030445400,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 48684,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "8cf6b696-e4e4-4245-9500-9c43c62e516d",
+      "agentId": "main-stock",
+      "name": "股价预警-xia",
+      "enabled": false,
+      "createdAtMs": 1773028287407,
+      "updatedAtMs": 1773031200008,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/5 9-15 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "使用 stock-watcher 和 tushare-finance 监控自选股，下跌超 3% 或上涨超 5% 触发预警，规则如下：下跌超3%触发预警，上涨超5%触发预警；务必要确保数据的准确性，获取数据后通过东方财富网（quote.eastmoney.com）进行校验; 参考~/.openclaw/workspace-main-stock/stock/report-template.txt模版回复我"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_9d907d39fb19b50579ba289b30041fc5"
+      },
+      "state": {
+        "lastRunAtMs": 1773030494084,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 10538,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "331b34e1-e68e-47ac-9ab7-92a31002716a",
+      "name": "stock-alert-push",
+      "enabled": false,
+      "deleteAfterRun": true,
+      "createdAtMs": 1773067688270,
+      "updatedAtMs": 1773067714227,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-03-09T14:48:13.231Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "🚨 **股票预警通知**\n\n⚙️ 预警规则\n• 📉 下跌 > 3% → 触发\n• 📈 上涨 > 5% → 触发\n\n━━━━━━━━━━━━━━━━━━\n\n🔴 **触发预警股票**\n\n| 代码 | 名称 | 当前价 | 涨跌幅 | 涨跌额 |\n|------|------|--------|--------|--------|\n| 601857 | 中国石油 | ¥12.92 | +5.04% | +¥0.62 |\n\n━━━━━━━━━━━━━━━━━━\n\n📊 数据来源：同花顺实时行情\n⏰ 数据时间：2026-03-09 15:00\n\n---\n🦞 龙虾股票监控服务"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_9d907d39fb19b50579ba289b30041fc5"
+      },
+      "state": {
+        "lastRunAtMs": 1773067703827,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 10400,
+        "lastError": "AxiosError: Request failed with status code 400",
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1
+      }
+    },
+    {
+      "id": "7a39a4cc-87e6-4cd3-a179-3ae6160e18e7",
+      "name": "股票预警推送",
+      "enabled": false,
+      "deleteAfterRun": true,
+      "createdAtMs": 1773067898632,
+      "updatedAtMs": 1773067937611,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-03-09T14:51:39.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "【自选股实时预警】\\n\\n⚠️ 今日发现异常波动股票：\\n\\n| 代码 | 名称 | 当前价 | 涨跌幅 | 涨跌额 | 时间 |\\n|------|------|--------|--------|-------|------|\\n| 920876 | 慧为智能 | ¥32.49 | +19.32% | +¥5.26 | 22:50 |\\n\\n⚙️ 预警规则：📉下跌 > 3% / 📈上涨 > 5%\\n\\n数据来源：东方财富网\\n时间：2026-03-09 22:50"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_9d907d39fb19b50579ba289b30041fc5"
+      },
+      "state": {
+        "lastRunAtMs": 1773067904033,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 33578,
+        "lastError": "AxiosError: Request failed with status code 400",
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1
+      }
+    },
+    {
+      "id": "834f53b2-3337-432e-8a77-13072bbdf288",
+      "agentId": "mian-stock",
+      "name": "实时股价监控",
+      "enabled": true,
+      "createdAtMs": 1773115005617,
+      "updatedAtMs": 1773129772229,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/5 9-15 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行~/.openclaw/workspace-main-stock/stock/realtime-data-cron-config.md 里的任务要求"
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1773190800000,
+        "lastRunAtMs": 1773129567812,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 204417,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 4,
+        "lastDeliveryError": "⚠️ ✍️ Write: `to ~/.openclaw/workspace-main-stock/stock/realtime-data.txt` failed",
+        "lastError": "⚠️ ✍️ Write: `to ~/.openclaw/workspace-main-stock/stock/realtime-data.txt` failed"
+      }
+    }
+  ]
+}
