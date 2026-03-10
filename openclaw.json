@@ -210,6 +210,14 @@
         }
       },
       {
+        "id": "monitor",
+        "name": "monitor",
+        "workspace": "/home/openclaw/.openclaw/workspace-monitor",
+        "sandbox": {
+          "mode": "off"
+        }
+      },
+      {
         "id": "main-stock-ding",
         "name": "main-stock-ding",
         "workspace": "/home/openclaw/.openclaw/workspace-main-stock-ding",
@@ -312,10 +320,10 @@
       }
     },
     {
-      "agentId": "stock",
+      "agentId": "monitor",
       "match": {
         "channel": "feishu",
-        "accountId": "main"
+        "accountId": "monitor"
       }
     },
     {
@@ -367,14 +375,21 @@
     "feishu": {
       "enabled": true,
       "defaultAccount": "stock",
+      "groupPolicy": "allowlist",
+      "groupAllowFrom": ["oc_e5021f4489531f598034cdfc2e0394f6"],
       "accounts": {
-        "main": {
+        "monitor": {
           "appId": "cli_a9280bd1dae31bef",
           "appSecret": "IoGwVOlXvNLWRkUjcXom3d1tQPzoGz1v"
         },
         "stock": {
           "appId": "cli_a92d6c78990a1bb6",
           "appSecret": "CqJiOLUUZRhwQf1VCK1Zce8oCCegpyyP"
+        }
+      },
+      "groups": {
+        "oc_e5021f4489531f598034cdfc2e0394f6": {
+          "replyToMode": "first"
         }
       }
     },
