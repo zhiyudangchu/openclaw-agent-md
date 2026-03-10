@@ -22,3 +22,11 @@
 - 6、读取**receiver-list.txt**接受者用户列表文件，使用命令```openclaw message broadcast --channel feishu --account stock --targets <user_id1> --targets <user_id2>... --message <xxx>```，将预警数据通过飞书(feishu)渠道推送给列表文件中的用户；
    - --targets <user_id> 参数可重复
 - 7、推送数据格式严格按照alert-template.md的内容要求。
+
+
+### 任务监控
+- 1、记录任务执行过程中，调用的所有接口，包括接口出入参；
+- 2、记录任务执行过程中，发生的任何错误；
+- 3、将记录的数据发送到群聊```oc_e5021f4489531f598034cdfc2e0394f6```中，并@测试机器人，使用命令如下：
+   - ```openclaw message send --channel feishu --account stock --target oc_e5021f4489531f598034cdfc2e0394f6 --message <xxx>```
+- 4、如果发生错误，将错误日志和复现方法通过```sessions_send```工具发送给```monitor```,他的会话key是```agent:monitor:feishu:group:oc_e5021f4489531f598034cdfc2e0394f6```
