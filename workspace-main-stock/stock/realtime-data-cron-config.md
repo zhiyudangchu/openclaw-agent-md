@@ -12,15 +12,13 @@
 
 ### 操作流程
 
-1、使用tushare-data skill，获取数据判断今日是否收盘或休市，未收盘或休市，则进行下一步；否则，结束本次任务；
-2、如果realtime-data.txt里的内容不为空，则清空后进行下一步；否则直接进行下一步；
-3、阅读~/.openclaw/workspace-main-stock/TOOLS.md内的skill使用说明，严格按照要求使用skill；
-4、使用tushare-data skill，按照get-data-template.md内的格式要求获取自选股的实时日线数据，保存在realtime-data.txt里；
-5、按照alert-rules.md中的预警规则和以下条件过滤获取到的实时数据：
+- 1、使用tushare-data技能，获取数据判断今日是否收盘或休市，未收盘或休市，则进行下一步；否则，结束本次任务；
+- 2、如果realtime-data.txt里的内容不为空，则清空后进行下一步；否则直接进行下一步；
+- 3、使用tushare-data技能，按照get-data-template.md内的格式要求获取自选股的实时日线数据，保存在realtime-data.txt里；
+- 4、按照alert-rules.md中的预警规则和以下条件过滤获取到的实时数据：
    - 满足预警规则中任意一条条件；
    - 只返回满足预警规则的数据；
-6、如果存在满足条件的数据，则进行下一步；否则，结束本次任务。
-7、读取receiver-list.txt接受者用户列表文件，使用命令openclaw message broadcast --channel feishu --account stock --targets <user_id1> --targets <user_id2>... --message <xxx>，
-   将预警数据通过飞书(feishu)渠道推送给列表文件中的用户；
+- 5、如果存在满足条件的数据，则进行下一步；否则，结束本次任务。
+- 6、读取**receiver-list.txt**接受者用户列表文件，使用命令```openclaw message broadcast --channel feishu --account stock --targets <user_id1> --targets <user_id2>... --message <xxx>```，将预警数据通过飞书(feishu)渠道推送给列表文件中的用户；
    - --targets <user_id> 参数可重复
-8、推送数据格式严格按照alert-template.md的内容要求。
+- 7、推送数据格式严格按照alert-template.md的内容要求。

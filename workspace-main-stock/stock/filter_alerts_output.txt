@@ -1,9 +1,0 @@
-=== ALERTS START ===
-{"code": "000852", "name": "石化机械", "close": 8.09, "pre_close": 8.41, "open": 8.13, "high": 8.22, "low": 7.97, "change": -0.32, "change_pct": -3.8, "alert_rule": "📉 下跌 > 3%"}
-{"code": "600583", "name": "海油工程", "close": 7.2, "pre_close": 7.51, "open": 7.1, "high": 7.35, "low": 7.1, "change": -0.31, "change_pct": -4.13, "alert_rule": "📉 下跌 > 3%"}
-{"code": "600256", "name": "广汇能源", "close": 6.69, "pre_close": 7.09, "open": 6.46, "high": 6.83, "low": 6.46, "change": -0.4, "change_pct": -5.64, "alert_rule": "📉 下跌 > 3%"}
-{"code": "601808", "name": "中海油服", "close": 17.89, "pre_close": 19.21, "open": 17.99, "high": 18.22, "low": 17.5, "change": -1.32, "change_pct": -6.87, "alert_rule": "📉 下跌 > 3%"}
-{"code": "601857", "name": "中国石油", "close": 11.99, "pre_close": 12.92, "open": 12.18, "high": 12.3, "low": 11.78, "change": -0.93, "change_pct": -7.2, "alert_rule": "🔴 跌幅 > 1%"}
-=== ALERTS END ===
-
-Total alerts: 5
