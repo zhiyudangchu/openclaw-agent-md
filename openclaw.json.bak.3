@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.7",
-    "lastTouchedAt": "2026-03-08T06:46:12.336Z"
+    "lastTouchedAt": "2026-03-08T06:46:19.093Z"
   },
   "wizard": {
     "lastRunAt": "2026-03-07T16:08:49.856Z",
@@ -37,8 +37,8 @@
               "cacheRead": 0,
               "cacheWrite": 0
             },
-            "contextWindow": 16384,
-            "maxTokens": 16384
+            "contextWindow": 256000,
+            "maxTokens": 254000
           },
           {
             "id": "qwen-omni-turbo",
@@ -181,7 +181,7 @@
         "name": "main-stock",
         "workspace": "/home/openclaw/.openclaw/workspace-main-stock",
         "heartbeat": {
-          "every": "5m",
+          "every": "30m",
           "target": "feishu",
           "to": "ou_9d907d39fb19b50579ba289b30041fc5",
           "prompt": "如果HEARTBEAT.md存在（工作区上下文），请读取它。严格遵守。不要从之前的聊天中推断或重复旧任务。如果没有什么需要注意的，请回复HEARTBEAT_OK。"
@@ -235,7 +235,7 @@
         "model": "custom-dashscope-aliyuncs-com/qwen3.5-122b-a10b",
         "sandbox": {
           "mode": "all",
-          "workspaceAccess": "none",
+          "workspaceAccess": "rw",
           "scope": "session",
           "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
           "docker": {
@@ -427,10 +427,14 @@
   },
   "plugins": {
     "allow": [
-      "dingtalk"
+      "dingtalk",
+      "feishu"
     ],
     "entries": {
       "dingtalk": {
+        "enabled": true
+      },
+      "feishu": {
         "enabled": true
       }
     },

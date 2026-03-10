@@ -1,7 +1,7 @@
 {
   "agent:main-stock:feishu:stock:direct:ou_9d907d39fb19b50579ba289b30041fc5": {
     "sessionId": "33e7839d-b8b1-46ef-a917-219cab66113e",
-    "updatedAt": 1773147192526,
+    "updatedAt": 1773157109208,
     "systemSent": true,
     "abortedLastRun": false,
     "chatType": "direct",
@@ -137,7 +137,7 @@
     "model": "qwen3.5-plus",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773147151033,
+      "generatedAt": 1773157055673,
       "sessionId": "33e7839d-b8b1-46ef-a917-219cab66113e",
       "sessionKey": "agent:main-stock:feishu:stock:direct:ou_9d907d39fb19b50579ba289b30041fc5",
       "provider": "custom-dashscope-aliyuncs-com",
@@ -157,9 +157,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 25146,
-        "projectContextChars": 10404,
-        "nonProjectContextChars": 14742
+        "chars": 25110,
+        "projectContextChars": 10389,
+        "nonProjectContextChars": 14721
       },
       "injectedWorkspaceFiles": [
         {
@@ -182,8 +182,8 @@
           "name": "TOOLS.md",
           "path": "/home/openclaw/.openclaw/workspace-main-stock/TOOLS.md",
           "missing": false,
-          "rawChars": 827,
-          "injectedChars": 827,
+          "rawChars": 812,
+          "injectedChars": 812,
           "truncated": false
         },
         {
@@ -458,7 +458,7 @@
   },
   "agent:main-stock:main": {
     "sessionId": "9e4e84d6-a3fb-44ce-a109-e1bc454c9c3e",
-    "updatedAt": 1773153763179,
+    "updatedAt": 1773164488012,
     "systemSent": true,
     "abortedLastRun": false,
     "chatType": "direct",
@@ -605,7 +605,7 @@
     "model": "qwen3.5-plus",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773153723020,
+      "generatedAt": 1773164478600,
       "sessionId": "9e4e84d6-a3fb-44ce-a109-e1bc454c9c3e",
       "sessionKey": "agent:main-stock:main",
       "provider": "custom-dashscope-aliyuncs-com",
@@ -625,33 +625,33 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 26018,
-        "projectContextChars": 10404,
-        "nonProjectContextChars": 15614
+        "chars": 21513,
+        "projectContextChars": 5920,
+        "nonProjectContextChars": 15593
       },
       "injectedWorkspaceFiles": [
         {
           "name": "AGENTS.md",
           "path": "/home/openclaw/.openclaw/workspace-main-stock/AGENTS.md",
           "missing": false,
-          "rawChars": 7804,
-          "injectedChars": 7804,
+          "rawChars": 3427,
+          "injectedChars": 3427,
           "truncated": false
         },
         {
           "name": "SOUL.md",
           "path": "/home/openclaw/.openclaw/workspace-main-stock/SOUL.md",
           "missing": false,
-          "rawChars": 319,
-          "injectedChars": 319,
+          "rawChars": 325,
+          "injectedChars": 325,
           "truncated": false
         },
         {
           "name": "TOOLS.md",
           "path": "/home/openclaw/.openclaw/workspace-main-stock/TOOLS.md",
           "missing": false,
-          "rawChars": 827,
-          "injectedChars": 827,
+          "rawChars": 741,
+          "injectedChars": 741,
           "truncated": false
         },
         {
@@ -674,8 +674,8 @@
           "name": "HEARTBEAT.md",
           "path": "/home/openclaw/.openclaw/workspace-main-stock/HEARTBEAT.md",
           "missing": false,
-          "rawChars": 399,
-          "injectedChars": 399,
+          "rawChars": 372,
+          "injectedChars": 372,
           "truncated": false
         },
         {

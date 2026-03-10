@@ -1,12 +1,12 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.7",
-    "lastTouchedAt": "2026-03-10T07:26:36.833Z"
+    "lastTouchedAt": "2026-03-10T17:50:27.760Z"
   },
   "wizard": {
-    "lastRunAt": "2026-03-09T14:51:15.892Z",
+    "lastRunAt": "2026-03-10T17:50:27.753Z",
     "lastRunVersion": "2026.3.7",
-    "lastRunCommand": "configure",
+    "lastRunCommand": "doctor",
     "lastRunMode": "local"
   },
   "browser": {
@@ -375,8 +375,6 @@
     "feishu": {
       "enabled": true,
       "defaultAccount": "stock",
-      "groupPolicy": "allowlist",
-      "groupAllowFrom": ["oc_e5021f4489531f598034cdfc2e0394f6"],
       "accounts": {
         "monitor": {
           "appId": "cli_a9280bd1dae31bef",
@@ -385,6 +383,12 @@
         "stock": {
           "appId": "cli_a92d6c78990a1bb6",
           "appSecret": "CqJiOLUUZRhwQf1VCK1Zce8oCCegpyyP"
+        },
+        "default": {
+          "groupPolicy": "allowlist",
+          "groupAllowFrom": [
+            "oc_e5021f4489531f598034cdfc2e0394f6"
+          ]
         }
       },
       "groups": {

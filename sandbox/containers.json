@@ -4,7 +4,7 @@
       "containerName": "feishu-sbx-agent-stock-feishu-main-direct-a-114723f5",
       "sessionKey": "agent:stock:feishu:main:direct:alice",
       "createdAtMs": 1772946891096,
-      "lastUsedAtMs": 1773127272008,
+      "lastUsedAtMs": 1773157044665,
       "image": "openclaw-sandbox-common:bookworm-slim-diy",
       "configHash": "5dd997bcd37c89752ba070e7f7c82c856faf73b647b215095e73daadafc66a01"
     }

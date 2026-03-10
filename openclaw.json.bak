@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.7",
-    "lastTouchedAt": "2026-03-09T14:51:31.525Z"
+    "lastTouchedAt": "2026-03-10T07:26:36.833Z"
   },
   "wizard": {
     "lastRunAt": "2026-03-09T14:51:15.892Z",
@@ -148,9 +148,9 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "custom-dashscope-aliyuncs-com/qwen3.5-397b-a17b",
+        "primary": "custom-dashscope-aliyuncs-com/qwen3.5-plus",
         "fallbacks": [
-          "custom-dashscope-aliyuncs-com/qwen3.5-plus",
+          "custom-dashscope-aliyuncs-com/qwen3.5-122b-a10b",
           "custom-dashscope-aliyuncs-com/qwen3.5-flash",
           "custom-dashscope-aliyuncs-com/qwen-omni-turbo"
         ]
@@ -205,6 +205,14 @@
           "to": "ou_9d907d39fb19b50579ba289b30041fc5",
           "prompt": "如果HEARTBEAT.md存在（工作区上下文），请读取它。严格遵守。不要从之前的聊天中推断或重复旧任务。如果没有什么需要注意的，请回复HEARTBEAT_OK。"
         },
+        "sandbox": {
+          "mode": "off"
+        }
+      },
+      {
+        "id": "monitor",
+        "name": "monitor",
+        "workspace": "/home/openclaw/.openclaw/workspace-monitor",
         "sandbox": {
           "mode": "off"
         }
@@ -312,10 +320,10 @@
       }
     },
     {
-      "agentId": "stock",
+      "agentId": "monitor",
       "match": {
         "channel": "feishu",
-        "accountId": "main"
+        "accountId": "monitor"
       }
     },
     {
@@ -367,14 +375,21 @@
     "feishu": {
       "enabled": true,
       "defaultAccount": "stock",
+      "groupPolicy": "allowlist",
+      "groupAllowFrom": ["oc_e5021f4489531f598034cdfc2e0394f6"],
       "accounts": {
-        "main": {
+        "monitor": {
           "appId": "cli_a9280bd1dae31bef",
           "appSecret": "IoGwVOlXvNLWRkUjcXom3d1tQPzoGz1v"
         },
         "stock": {
           "appId": "cli_a92d6c78990a1bb6",
           "appSecret": "CqJiOLUUZRhwQf1VCK1Zce8oCCegpyyP"
+        }
+      },
+      "groups": {
+        "oc_e5021f4489531f598034cdfc2e0394f6": {
+          "replyToMode": "first"
         }
       }
     },

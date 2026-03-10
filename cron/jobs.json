@@ -170,7 +170,7 @@
       "name": "实时股价监控",
       "enabled": true,
       "createdAtMs": 1773115005617,
-      "updatedAtMs": 1773129772229,
+      "updatedAtMs": 1773164856479,
       "schedule": {
         "kind": "cron",
         "expr": "*/5 9-15 * * 1-5",
@@ -188,15 +188,15 @@
       },
       "state": {
         "nextRunAtMs": 1773190800000,
-        "lastRunAtMs": 1773129567812,
+        "lastRunAtMs": 1773164685525,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 204417,
+        "lastDurationMs": 170954,
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 4,
-        "lastDeliveryError": "⚠️ ✍️ Write: `to ~/.openclaw/workspace-main-stock/stock/realtime-data.txt` failed",
-        "lastError": "⚠️ ✍️ Write: `to ~/.openclaw/workspace-main-stock/stock/realtime-data.txt` failed"
+        "consecutiveErrors": 1,
+        "lastError": "⚠️ ✍️ Write: `to ~/.openclaw/workspace-main-stock/stock/realtime-data.txt` failed",
+        "lastDeliveryError": "⚠️ ✍️ Write: `to ~/.openclaw/workspace-main-stock/stock/realtime-data.txt` failed"
       }
     }
   ]
