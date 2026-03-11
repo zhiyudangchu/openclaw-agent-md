@@ -170,7 +170,7 @@
       "name": "实时股价监控",
       "enabled": true,
       "createdAtMs": 1773115005617,
-      "updatedAtMs": 1773213405832,
+      "updatedAtMs": 1773215840549,
       "schedule": {
         "kind": "cron",
         "expr": "*/5 9-15 * * 1-5",
@@ -187,11 +187,11 @@
         "channel": "last"
       },
       "state": {
-        "nextRunAtMs": 1773213600000,
-        "lastRunAtMs": 1773213300006,
+        "nextRunAtMs": 1773277200000,
+        "lastRunAtMs": 1773215700003,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 105826,
+        "lastDurationMs": 140546,
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0

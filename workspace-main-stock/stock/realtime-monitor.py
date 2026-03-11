@@ -2,402 +2,345 @@
 # -*- coding: utf-8 -*-
 """
 实时股价监控脚本
-按照 realtime-data-cron-config.md 的要求执行
+功能：
+1. 检查今日是否收盘
+2. 获取自选股实时日线数据
+3. 按预警规则过滤
+4. 输出预警数据
 """
 
-import tushare as ts
-import pandas as pd
 import os
 import sys
+import pandas as pd
 from datetime import datetime
 
-# 读取环境变量中的 token
-token = os.getenv('TUSHARE_TOKEN')
-if not token:
-    print("错误：未找到 TUSHARE_TOKEN 环境变量")
-    sys.exit(1)
+# 初始化 tushare
+import tushare as ts
 
-# 初始化 pro 接口
+token = os.getenv('TUSHARE_TOKEN')
 pro = ts.pro_api(token)
 
-# 工作路径
-WORK_DIR = os.path.expanduser('~/.openclaw/workspace-main-stock/stock')
+# 文件路径
+WATCHLIST_FILE = os.path.expanduser('~/.openclaw/workspace-main-stock/stock/watchlist.txt')
+REALTIME_DATA_FILE = os.path.expanduser('~/.openclaw/workspace-main-stock/stock/realtime-data.txt')
+ALERT_RULES_FILE = os.path.expanduser('~/.openclaw/workspace-main-stock/stock/alert-rules.md')
+
+# 记录接口调用日志
+api_logs = []
+
+def log_api_call(interface, params, result_count, status='success', error=None):
+    """记录 API 调用"""
+    api_logs.append({
+        'interface': interface,
+        'params': params,
+        'result_count': result_count,
+        'status': status,
+        'error': error,
+        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    })
 
 def check_market_status():
-    """
-    步骤 1: 检查今日是否收盘或休市以及是否在交易时间内
-    返回：True 表示可以继续，False 表示结束
-    """
-    print("===== 步骤 1: 检查市场状态 =====")
+    """检查今日是否收盘或休市"""
     today = datetime.now().strftime('%Y%m%d')
+    weekday = datetime.now().weekday()
     
+    # 周末休市
+    if weekday >= 5:
+        print(f"今日是周末，市场休市")
+        return False
+    
+    # 检查交易日历
     try:
-        # 获取上交所交易日历
         df = pro.trade_cal(exchange='SSE', start_date=today, end_date=today)
-        
-        if df.empty:
-            print(f"⚠️  未获取到 {today} 的交易日历数据")
+        if df.empty or df.iloc[0]['is_open'] == 0:
+            print(f"今日 ({today}) 是休市日")
+            log_api_call('trade_cal', {'exchange': 'SSE', 'start_date': today, 'end_date': today}, 0)
             return False
-        
-        is_open = df.iloc[0]['is_open']
-        
-        if is_open == '0':
-            print(f"❌ 今日 ({today}) 休市，结束任务")
-            return False
-        
-        # 检查当前时间是否在交易时间内 (9:30-11:30, 13:00-15:00)
-        now = datetime.now()
-        hour = now.hour
-        minute = now.minute
-        current_time = hour * 60 + minute
-        
-        # 上午交易时间：9:30-11:30 (570-690)
-        # 下午交易时间：13:00-15:00 (780-900)
-        morning_start = 9 * 60 + 30
-        morning_end = 11 * 60 + 30
-        afternoon_start = 13 * 60
-        afternoon_end = 15 * 60
-        
-        if (morning_start <= current_time <= morning_end) or (afternoon_start <= current_time <= afternoon_end):
-            print(f"✅ 市场开放中，当前时间：{now.strftime('%H:%M')}")
-            return True
-        else:
-            print(f"⚠️  当前时间 {now.strftime('%H:%M')} 不在交易时间内")
-            # 如果是收盘后 (15:00 之后)，仍然可以继续处理数据
-            if current_time > afternoon_end:
-                print("✅ 收盘后，仍可获取当日最终数据")
-                return True
-            else:
-                print("❌ 非交易时间，结束任务")
-                return False
-                
+        log_api_call('trade_cal', {'exchange': 'SSE', 'start_date': today, 'end_date': today}, 1)
     except Exception as e:
-        print(f"❌ 检查市场状态失败：{e}")
+        print(f"检查交易日历失败：{e}")
+        log_api_call('trade_cal', {'exchange': 'SSE', 'start_date': today, 'end_date': today}, 0, 'error', str(e))
         return False
-
-def clear_realtime_data():
-    """
-    步骤 2: 清空 realtime-data.txt
-    """
-    print("\n===== 步骤 2: 清空实时数据文件 =====")
-    filepath = os.path.join(WORK_DIR, 'realtime-data.txt')
     
-    try:
-        # 检查文件是否存在且有内容
-        if os.path.exists(filepath):
-            with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
-            if content.strip():
-                print("📁 发现已有数据，清空文件")
-            else:
-                print("📁 文件为空")
-        else:
-            print("📁 文件不存在，将创建新文件")
-        
-        # 清空文件（只保留表头）
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write('ts_code,name,pre_close,high,open,low,close,vol,amount,num\n')
-        
-        print("✅ 文件已清空")
-        return True
-    except Exception as e:
-        print(f"❌ 清空文件失败：{e}")
+    # 检查当前时间（A 股交易时间：9:30-11:30, 13:00-15:00）
+    now = datetime.now()
+    current_time = now.strftime('%H%M')
+    
+    # 未开盘或已收盘
+    if current_time < '0930' or current_time > '1500':
+        print(f"当前时间 {current_time}，市场未开盘或已收盘")
         return False
+    
+    print(f"市场交易中，当前时间：{now.strftime('%Y-%m-%d %H:%M:%S')}")
+    return True
 
-def get_realtime_data():
-    """
-    步骤 3: 获取自选股的实时日线数据
-    返回：DataFrame 或 None
-    """
-    print("\n===== 步骤 3: 获取实时日线数据 =====")
-    
-    # 读取自选股列表
-    watchlist_path = os.path.join(WORK_DIR, 'watchlist.txt')
-    stock_codes = []
+def load_watchlist():
+    """加载自选股列表"""
+    watchlist = []
+    with open(WATCHLIST_FILE, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line and '|' in line:
+                code, name = line.split('|', 1)
+                # 转换代码格式
+                if '.' not in code:
+                    if code.startswith('6'):
+                        code = f"{code}.SH"
+                    elif code.startswith('0') or code.startswith('3'):
+                        code = f"{code}.SZ"
+                    elif code.startswith('9') or code.startswith('8'):
+                        code = f"{code}.BJ"
+                watchlist.append({'ts_code': code, 'name': name})
+    return watchlist
+
+def get_realtime_data(watchlist):
+    """获取实时日线数据"""
+    # 构建 ts_code 参数，支持批量获取
+    ts_codes = ','.join([stock['ts_code'] for stock in watchlist])
     
     try:
-        with open(watchlist_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if line and '|' in line:
-                    code, name = line.split('|')
-                    # 添加后缀
-                    if code.isdigit():
-                        if code.startswith('6'):
-                            code = code + '.SH'
-                        elif code.startswith('0') or code.startswith('3'):
-                            code = code + '.SZ'
-                        elif code.startswith('9'):
-                            code = code + '.BJ'
-                    elif '.' not in code:
-                        # 港股或美股，保持原样
-                        pass
-                    stock_codes.append(code)
-        
-        print(f"📋 自选股数量：{len(stock_codes)}")
-        print(f"📋 股票代码：{', '.join(stock_codes)}")
-        
-    except Exception as e:
-        print(f"❌ 读取自选股列表失败：{e}")
-        return None
-    
-    # 批量获取实时日线数据
-    try:
-        ts_codes_str = ','.join(stock_codes)
-        print(f"🔍 调用 rt_k 接口获取数据...")
-        
-        df = pro.rt_k(ts_code=ts_codes_str)
+        print(f"获取实时日线数据：{ts_codes}")
+        df = pro.rt_k(ts_code=ts_codes)
+        log_api_call('rt_k', {'ts_code': ts_codes}, len(df) if df is not None else 0)
         
         if df is None or df.empty:
-            print("❌ 未获取到数据")
+            print("未获取到实时数据")
             return None
         
-        print(f"✅ 成功获取 {len(df)} 条数据")
-        print(df.head())
-        
-        # 保存到文件
-        filepath = os.path.join(WORK_DIR, 'realtime-data.txt')
-        df.to_csv(filepath, index=False, encoding='utf-8', mode='a', header=False)
-        print(f"✅ 数据已保存到 {filepath}")
-        
+        print(f"成功获取 {len(df)} 条实时数据")
         return df
-        
     except Exception as e:
-        print(f"❌ 获取实时数据失败：{e}")
+        print(f"获取实时数据失败：{e}")
+        log_api_call('rt_k', {'ts_code': ts_codes}, 0, 'error', str(e))
         return None
 
 def apply_alert_rules(df):
     """
-    步骤 4: 按照 alert-rules.md 中的预警规则过滤数据
-    返回：满足条件的数据
-    """
-    print("\n===== 步骤 4: 应用预警规则 =====")
+    应用预警规则过滤数据
+    通用规则：
+    - 下跌 > 3% → 触发
+    - 上涨 > 5% → 触发
     
+    个股专属规则：
+    - 中国石油 (601857.SH): 涨幅 > 2% 或 跌幅 > 1% → 触发
+    """
     if df is None or df.empty:
-        print("❌ 无数据可过滤")
-        return None
+        return pd.DataFrame()
     
     # 计算涨跌幅
-    df['pct_change'] = ((df['close'] - df['pre_close']) / df['pre_close'] * 100).round(2)
-    df['change_amount'] = (df['close'] - df['pre_close']).round(2)
+    df['pct_chg'] = ((df['close'] - df['pre_close']) / df['pre_close'] * 100).round(2)
     
-    alert_df = pd.DataFrame()
-    
-    # 通用规则
-    # 1. 下跌 > 3% → 触发
-    # 2. 上涨 > 5% → 触发
-    
-    # 个股专属规则
-    # 中国石油 (601857.SH): 涨幅 > 2% 或 跌幅 > 1%
+    alert_data = []
     
     for idx, row in df.iterrows():
         ts_code = row['ts_code']
-        pct = row['pct_change']
-        triggered = False
-        reason = ""
+        pct_chg = row['pct_chg']
+        name = row.get('name', '')
         
-        # 检查是否是中国石油
-        if ts_code == '601857.SH':
-            if pct > 2:
+        triggered = False
+        reason = ''
+        
+        # 检查个股专属规则
+        if ts_code == '601857.SH':  # 中国石油
+            if pct_chg > 2:
                 triggered = True
-                reason = f"🟢 涨幅 {pct}% > 2%"
-            elif pct < -1:
+                reason = '🟢 涨幅 > 2%'
+            elif pct_chg < -1:
                 triggered = True
-                reason = f"🔴 跌幅 {pct}% < -1%"
+                reason = '🔴 跌幅 > 1%'
         else:
             # 通用规则
-            if pct < -3:
+            if pct_chg < -3:
                 triggered = True
-                reason = f"📉 下跌 {pct}% < -3%"
-            elif pct > 5:
+                reason = '📉 下跌 > 3%'
+            elif pct_chg > 5:
                 triggered = True
-                reason = f"📈 上涨 {pct}% > 5%"
+                reason = '📈 上涨 > 5%'
         
         if triggered:
-            row_dict = row.to_dict()
-            row_dict['alert_reason'] = reason
-            alert_df = pd.concat([alert_df, pd.DataFrame([row_dict])], ignore_index=True)
-            print(f"⚠️  触发预警：{row['name']} ({ts_code}) - {reason}")
+            alert_data.append({
+                'ts_code': ts_code,
+                'name': name,
+                'close': row['close'],
+                'pct_chg': pct_chg,
+                'change_amount': round(row['close'] - row['pre_close'], 2),
+                'trade_time': row.get('trade_time', datetime.now().strftime('%Y%m%d%H%M%S')),
+                'reason': reason
+            })
     
-    if alert_df.empty:
-        print("✅ 无股票触发预警规则")
-        return None
-    else:
-        print(f"✅ 共 {len(alert_df)} 只股票触发预警")
-        return alert_df
+    if alert_data:
+        result_df = pd.DataFrame(alert_data)
+        # 按涨跌幅排序
+        result_df = result_df.sort_values('pct_chg', ascending=False)
+        return result_df
+    
+    return pd.DataFrame()
 
-def send_alerts(alert_df):
-    """
-    步骤 6: 读取 receiver-list.txt，发送飞书消息
-    """
-    print("\n===== 步骤 6: 发送预警通知 =====")
+def format_alert_message(df):
+    """格式化预警消息为表格形式"""
+    if df is None or df.empty:
+        return ""
     
-    if alert_df is None or alert_df.empty:
-        print("⚠️  无预警数据需要发送")
-        return True
-    
-    # 读取接收者列表
-    receiver_path = os.path.join(WORK_DIR, 'receiver-list.txt')
-    receivers = []
-    
-    try:
-        with open(receiver_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    receivers.append(line)
-        
-        print(f"📬 接收者数量：{len(receivers)}")
-        
-    except Exception as e:
-        print(f"❌ 读取接收者列表失败：{e}")
-        return False
-    
-    # 构建消息内容（按照 alert-template.md 格式）
-    # 读取 alert-template.md
-    template_path = os.path.join(WORK_DIR, 'alert-template.md')
-    
-    # 按涨跌幅排序
-    alert_df = alert_df.sort_values('pct_change', ascending=False)
-    
-    # 构建表格
     lines = []
-    lines.append("🚨 **股价预警通知**\n")
-    lines.append("| 代码 | 名称 | 当前价 | 涨跌幅 | 涨跌额 | 时间 |")
-    lines.append("|------|------|--------|--------|--------|------|")
+    lines.append("🚨 **股价预警通知** 🚨\n")
+    lines.append("| 代码 | 名称 | 当前价 | 涨跌幅 | 涨跌额 | 时间 | 触发原因 |")
+    lines.append("|------|------|--------|--------|--------|------|----------|")
     
-    for idx, row in alert_df.iterrows():
-        code = row['ts_code'].split('.')[0]
+    for idx, row in df.iterrows():
+        ts_code = row['ts_code']
         name = row['name']
-        price = f"¥{row['close']:.2f}"
-        pct = f"+{row['pct_change']:.2f}%" if row['pct_change'] > 0 else f"{row['pct_change']:.2f}%"
-        change = f"¥{row['change_amount']:.2f}"
-        time_str = datetime.now().strftime('%H:%M')
-        
-        # 高亮异常
-        if row['pct_change'] > 0:
-            lines.append(f"| {code} | {name} | {price} | 📈{pct} | {change} | {time_str} |")
+        close = f"¥{row['close']:.2f}"
+        pct_chg = f"{row['pct_chg']:+.2f}%"
+        change_amount = f"¥{row['change_amount']:+.2f}"
+        # 格式化时间
+        trade_time = row['trade_time']
+        if len(str(trade_time)) >= 12:
+            time_str = f"{str(trade_time)[8:10]}:{str(trade_time)[10:12]}"
         else:
-            lines.append(f"| {code} | {name} | {price} | 📉{pct} | {change} | {time_str} |")
+            time_str = datetime.now().strftime('%H:%M')
+        reason = row['reason']
+        
+        lines.append(f"| {ts_code.split('.')[0]} | {name} | {close} | {pct_chg} | {change_amount} | {time_str} | {reason} |")
     
-    lines.append("\n⚙️ **预警规则**")
+    lines.append("\n")
+    lines.append("⚙️ **预警规则**")
     lines.append("- 📉 下跌 > 3% → 触发")
     lines.append("- 📈 上涨 > 5% → 触发")
-    lines.append("- 🟢 中国石油：涨幅 > 2% → 触发")
-    lines.append("- 🔴 中国石油：跌幅 > 1% → 触发")
-    lines.append(f"\n**【数据来源】**")
-    lines.append("- 数据来源：Tushare Pro")
-    lines.append(f"- 更新时间：{datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    lines.append("- 中国石油：🟢 涨幅 > 2% / 🔴 跌幅 > 1% → 触发")
+    lines.append("\n")
+    lines.append(f"**数据来源**: Tushare Pro")
+    lines.append(f"**更新时间**: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     
-    message = '\n'.join(lines)
-    
-    # 构建命令
-    targets_args = ' '.join([f'--targets {r}' for r in receivers])
-    command = f'openclaw message broadcast --channel feishu --account stock {targets_args} --message "{message}"'
-    
-    print(f"\n📤 执行命令：{command}")
-    
-    try:
-        import subprocess
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        
-        if result.returncode == 0:
-            print("✅ 预警消息发送成功")
-            return True
-        else:
-            print(f"❌ 发送失败：{result.stderr}")
-            return False
-    except Exception as e:
-        print(f"❌ 执行命令失败：{e}")
-        return False
+    return '\n'.join(lines)
 
-def log_execution(status, error_msg=None):
-    """
-    步骤 7: 记录任务执行情况并发送到群聊
-    """
-    print("\n===== 步骤 7: 记录任务执行日志 =====")
-    
-    # 构建日志消息
-    log_lines = []
-    log_lines.append("📊 **实时股价监控任务执行报告**")
-    log_lines.append(f"- 执行时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    log_lines.append(f"- 执行状态：{'✅ 成功' if status else '❌ 失败'}")
-    
-    if error_msg:
-        log_lines.append(f"- 错误信息：{error_msg}")
-    
-    message = '\n'.join(log_lines)
-    
-    # 发送到群聊
-    command = f'openclaw message send --channel feishu --account stock --target oc_e5021f4489531f598034cdfc2e0394f6 --message "{message}"'
-    
-    print(f"📤 执行命令：{command}")
-    
-    try:
-        import subprocess
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        
-        if result.returncode == 0:
-            print("✅ 执行日志发送成功")
-            return True
+def save_realtime_data(df):
+    """保存实时数据到文件"""
+    with open(REALTIME_DATA_FILE, 'w', encoding='utf-8') as f:
+        if df is not None and not df.empty:
+            f.write(df.to_csv(index=False, sep='|'))
         else:
-            print(f"❌ 发送失败：{result.stderr}")
-            return False
-    except Exception as e:
-        print(f"❌ 执行命令失败：{e}")
-        return False
+            f.write('')
+    print(f"实时数据已保存到 {REALTIME_DATA_FILE}")
+
+def load_receiver_list():
+    """加载接收者列表"""
+    receiver_file = os.path.expanduser('~/.openclaw/workspace-main-stock/stock/receiver-list.txt')
+    receivers = []
+    with open(receiver_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                receivers.append(line)
+    return receivers
+
+def get_api_logs_message():
+    """生成 API 调用日志消息"""
+    lines = []
+    lines.append("📊 **任务执行日志**\n")
+    lines.append(f"**执行时间**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append(f"**调用接口数**: {len(api_logs)}\n")
+    
+    for log in api_logs:
+        status_emoji = '✅' if log['status'] == 'success' else '❌'
+        lines.append(f"{status_emoji} **接口**: {log['interface']}")
+        lines.append(f"   参数：{log['params']}")
+        lines.append(f"   结果数：{log['result_count']}")
+        lines.append(f"   状态：{log['status']}")
+        if log['error']:
+            lines.append(f"   错误：{log['error']}")
+        lines.append(f"   时间：{log['timestamp']}")
+        lines.append("")
+    
+    return '\n'.join(lines)
 
 def main():
-    """
-    主函数
-    """
     print("=" * 60)
     print("实时股价监控任务启动")
-    print(f"执行时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
-    error_msg = None
-    success = True
+    # 步骤 1: 检查市场状态
+    print("\n【步骤 1】检查市场状态...")
+    if not check_market_status():
+        print("市场已收盘或休市，任务结束")
+        # 即使市场休市，也要记录日志
+        log_api_call('market_status_check', {}, 0, 'success', '市场休市')
+        return get_api_logs_message()
     
-    try:
-        # 步骤 1: 检查市场状态
-        if not check_market_status():
-            log_execution(False, "市场休市或非交易时间")
-            return
-        
-        # 步骤 2: 清空实时数据文件
-        if not clear_realtime_data():
-            error_msg = "清空文件失败"
-            success = False
-        
-        # 步骤 3: 获取实时数据
-        df = get_realtime_data()
-        if df is None:
-            error_msg = "获取实时数据失败"
-            success = False
-            log_execution(success, error_msg)
-            return
-        
-        # 步骤 4 & 5: 应用预警规则
-        alert_df = apply_alert_rules(df)
-        
-        if alert_df is None or alert_df.empty:
-            print("\n✅ 无预警触发，任务结束")
-            log_execution(True)
-            return
-        
-        # 步骤 6: 发送预警通知
-        if not send_alerts(alert_df):
-            error_msg = "发送预警通知失败"
-            success = False
-        
-        # 步骤 7: 记录执行日志
-        log_execution(success, error_msg)
-        
-    except Exception as e:
-        error_msg = f"任务执行异常：{str(e)}"
-        print(f"❌ {error_msg}")
-        log_execution(False, error_msg)
+    # 步骤 2: 清空 realtime-data.txt
+    print("\n【步骤 2】清空实时数据文件...")
+    with open(REALTIME_DATA_FILE, 'w', encoding='utf-8') as f:
+        f.write('')
+    print("已清空 realtime-data.txt")
+    
+    # 步骤 3: 加载自选股并获取实时数据
+    print("\n【步骤 3】获取实时日线数据...")
+    watchlist = load_watchlist()
+    print(f"自选股数量：{len(watchlist)}")
+    
+    realtime_df = get_realtime_data(watchlist)
+    if realtime_df is None or realtime_df.empty:
+        print("未获取到有效数据，任务结束")
+        return get_api_logs_message()
+    
+    # 保存实时数据
+    save_realtime_data(realtime_df)
+    
+    # 步骤 4: 应用预警规则
+    print("\n【步骤 4】应用预警规则过滤...")
+    alert_df = apply_alert_rules(realtime_df)
+    
+    if alert_df is None or alert_df.empty:
+        print("无满足预警规则的数据，任务结束")
+        return get_api_logs_message()
+    
+    print(f"满足预警规则的股票数：{len(alert_df)}")
+    
+    # 步骤 5: 格式化预警消息
+    print("\n【步骤 5】格式化预警消息...")
+    alert_message = format_alert_message(alert_df)
+    print("\n" + alert_message)
+    
+    # 步骤 6: 加载接收者列表并构建命令
+    print("\n【步骤 6】准备发送预警通知...")
+    receivers = load_receiver_list()
+    print(f"接收者数量：{len(receivers)}")
+    
+    # 构建飞书推送命令
+    targets_args = ' '.join([f'--targets {r}' for r in receivers])
+    # 对消息内容进行转义，避免 shell 解析问题
+    safe_message = alert_message.replace('"', '\\"').replace('$', '\\$').replace('`', '\\`')
+    send_command = f'openclaw message broadcast --channel feishu --account stock {targets_args} --message "{safe_message}"'
+    
+    print("\n飞书推送命令:")
+    print(send_command)
+    
+    # 返回需要执行的命令和日志
+    return {
+        'alert_message': alert_message,
+        'send_command': send_command,
+        'receivers': receivers,
+        'api_logs': get_api_logs_message()
+    }
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    result = main()
+    
+    # 输出结果供 shell 脚本使用
+    if isinstance(result, dict):
+        print("\n" + "=" * 60)
+        print("任务执行完成")
+        print("=" * 60)
+        # 将命令写入临时文件
+        with open('/tmp/stock_alert_command.sh', 'w') as f:
+            f.write(result['send_command'])
+        print(f"\n预警推送命令已写入 /tmp/stock_alert_command.sh")
+        
+        # 将 API 日志写入临时文件
+        with open('/tmp/stock_api_logs.txt', 'w') as f:
+            f.write(result['api_logs'])
+        print(f"API 日志已写入 /tmp/stock_api_logs.txt")
+    else:
+        # 市场休市等情况
+        with open('/tmp/stock_api_logs.txt', 'w') as f:
+            f.write(result)
+        print(f"API 日志已写入 /tmp/stock_api_logs.txt")
