@@ -7,7 +7,7 @@
 - 如果有skill要求你在~/下操作，统一重定向到~/.openclaw/workspace-stock-prod
 
 ## 固定文件位置
-- 自选股全部维护在~/.openclaw/workspace-stock-prod/stock/watchlist.txt中
+- 自选股全部维护在~/.openclaw/workspace-stock-prod/stock/stock-list.txt中
 - 预警规则维护在~/.openclaw/workspace-stock-prod/stock/alert-rules.md中
 - 相关维护操作统一在上述文件中进行
 
