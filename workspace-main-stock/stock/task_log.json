@@ -1,0 +1,26 @@
+{
+  "task_id": "834f53b2-3337-432e-8a77-13072bbdf288",
+  "task_name": "实时股价监控",
+  "execution_time": "2026-03-11 13:35:00",
+  "market_status": "OPEN",
+  "trading_hours": true,
+  "api_calls": [
+    {
+      "api": "pro.trade_cal",
+      "params": {"exchange": "SSE", "start_date": "20260311", "end_date": "20260311", "is_open": "1"},
+      "result": "Market open"
+    },
+    {
+      "api": "pro.rt_k",
+      "params": {"ts_code": "601857.SH,601808.SH,600256.SH,600583.SH,000852.SZ,600547.SH,601069.SH,600988.SH,000975.SZ,002716.SZ,601899.SH,9866.HK,AAPL,920876.BJ,688111.SH,300058.SZ"},
+      "result": "14 records fetched"
+    }
+  ],
+  "stocks_monitored": 16,
+  "stocks_fetched": 14,
+  "alerts_triggered": 2,
+  "alert_stocks": ["300058.SZ 蓝色光标 (-3.79%)", "002716.SZ 湖南白银 (-3.57%)"],
+  "receivers_notified": 4,
+  "notification_status": "SUCCESS",
+  "errors": []
+}
