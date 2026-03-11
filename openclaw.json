@@ -147,6 +147,7 @@
   },
   "agents": {
     "defaults": {
+      "userTimezone": "Asia/Shanghai",
       "model": {
         "primary": "custom-dashscope-aliyuncs-com/qwen3.5-plus",
         "fallbacks": [
@@ -222,35 +223,48 @@
         "name": "monitor",
         "workspace": "/home/openclaw/.openclaw/workspace-monitor",
         "sandbox": {
-          "mode": "off"
-        }
-      },
-      {
-        "id": "public",
-        "name": "public",
-        "sandbox": {
           "mode": "all",
           "workspaceAccess": "rw",
           "scope": "session",
           "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
           "docker": {
             "image": "openclaw-sandbox-common:bookworm-slim-diy",
-            "containerPrefix": "dingtalk-public-sbx-",
+            "containerPrefix": "feishu-monitor-diysbx-",
             "workdir": "/home/sandbox",
             "readOnlyRoot": false,
             "network": "bridge",
             "user": "1000:1000",
-            "setupCommand": "apt-get update && apt-get install -y git curl jq"
+            "setupCommand": ""
+          },
+          "browser": {
+            "enabled": true,
+            "image": "openclaw-sandbox-browser:bookworm-slim",
+            "containerPrefix": "feishu-monitor-browser-",
+            "cdpPort": 9222,
+            "vncPort": 5900,
+            "noVncPort": 6080,
+            "headless": false,
+            "enableNoVnc": true,
+            "allowHostControl": false,
+            "allowedControlUrls": [
+              "http://10.0.0.42:18791"
+            ],
+            "allowedControlHosts": [
+              "browser.lab.local",
+              "10.0.0.42"
+            ],
+            "allowedControlPorts": [
+              18791
+            ],
+            "autoStart": true,
+            "autoStartTimeoutMs": 12000
           }
         },
         "tools": {
           "sandbox": {
             "tools": {
               "allow": [
-                "group:runtime",
-                "group:fs",
-                "group:sessions",
-                "group:memory"
+                "group:*"
               ]
             }
           }
@@ -270,7 +284,7 @@
   },
   "bindings": [
     {
-      "agentId": "public",
+      "agentId": "monitor",
       "match": {
         "channel": "dingtalk",
         "accountId": "default"
