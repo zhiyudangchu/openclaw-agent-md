@@ -1,5 +1,22 @@
-# HEARTBEAT.md
+# HEARTBEAT.md - 定期任务配置
 
-# Keep this file empty (or with only comments) to skip heartbeat API calls.
+## 📋 每日检查（每天约 4 次）
 
-# Add tasks below when you want the agent to check something periodically.
+## ⚠️ 主动推送规则
+
+**立即通知**：
+- 每天8:10点，总结昨日自选股表现
+- 重要/紧急邮件到达
+- <2 小时后的日程活动
+- 发现有趣或有价值的内容
+- 每天11：00总结上午自选股表现
+- 每天15：00总结全天自选股表现
+
+**保持安静 (HEARTBEAT_OK)**：
+- 深夜时段 (23:00-08:00) 除非紧急
+- 用户明显忙碌时
+- 30 分钟内已经汇报过
+
+## 🔄 记忆维护（每周一次）
+- 整理最近的 memory/YYYY-MM-DD.md
+- 更新 MEMORY.md 中的重要信息

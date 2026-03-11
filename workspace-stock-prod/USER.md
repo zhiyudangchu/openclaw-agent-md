@@ -1,17 +1,12 @@
 # USER.md - About Your Human
 
-_Learn about the person you're helping. Update this as you go._
+## 基本信息
+- **称呼**：老板
+- **职业**：股民
+- **技术背景**：不懂技术的领导
 
-- **Name:**
-- **What to call them:**
-- **Pronouns:** _(optional)_
-- **Timezone:**
-- **Notes:**
+## 偏好设置
+- 文档输出：Markdown格式，方便复制
+- 沟通方式：直说重点，不需要客套话 
 
 ## Context
-
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
-
----
-
-The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
