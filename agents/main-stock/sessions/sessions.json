@@ -14,12 +14,12 @@
     "lastTo": "user:ou_9d907d39fb19b50579ba289b30041fc5",
     "lastAccountId": "stock",
     "origin": {
-      "label": "ou_9d907d39fb19b50579ba289b30041fc5",
+      "label": "feishu:ou_9d907d39fb19b50579ba289b30041fc5",
       "provider": "feishu",
       "surface": "feishu",
       "chatType": "direct",
       "from": "feishu:ou_9d907d39fb19b50579ba289b30041fc5",
-      "to": "user:ou_9d907d39fb19b50579ba289b30041fc5",
+      "to": "ou_9d907d39fb19b50579ba289b30041fc5",
       "accountId": "stock"
     },
     "sessionFile": "/home/openclaw/.openclaw/agents/main-stock/sessions/8a034be0-9bff-48ff-98b0-a60258fa1f85.jsonl",
@@ -457,8 +457,8 @@
     "contextTokens": 256000
   },
   "agent:main-stock:main": {
-    "sessionId": "9e4e84d6-a3fb-44ce-a109-e1bc454c9c3e",
-    "updatedAt": 1773164488012,
+    "sessionId": "3947e9fd-69ac-4604-ba8e-a817581925c5",
+    "updatedAt": 1773218064896,
     "systemSent": true,
     "abortedLastRun": false,
     "chatType": "direct",
@@ -468,10 +468,10 @@
       "from": "ou_9d907d39fb19b50579ba289b30041fc5",
       "to": "ou_9d907d39fb19b50579ba289b30041fc5"
     },
-    "sessionFile": "/home/openclaw/.openclaw/agents/main-stock/sessions/9e4e84d6-a3fb-44ce-a109-e1bc454c9c3e.jsonl",
+    "sessionFile": "/home/openclaw/.openclaw/agents/main-stock/sessions/3947e9fd-69ac-4604-ba8e-a817581925c5.jsonl",
     "compactionCount": 0,
     "skillsSnapshot": {
-      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>feishu-doc</name>\n    <description>Feishu document read/write operations. Activate when user mentions Feishu docs, cloud docs, or docx links.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-doc/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-drive</name>\n    <description>Feishu cloud storage file management. Activate when user mentions cloud space, folders, drive.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-drive/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-perm</name>\n    <description>Feishu permission management for documents and files. Activate when user mentions sharing, permissions, collaborators.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-perm/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-wiki</name>\n    <description>Feishu knowledge base navigation. Activate when user mentions knowledge base, wiki, or wiki links.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-wiki/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>find-skills</name>\n    <description>Helps users discover and install agent skills when they ask questions like &quot;how do I do X&quot;, &quot;find a skill for X&quot;, &quot;is there a skill that can...&quot;, or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.</description>\n    <location>~/.agents/skills/find-skills/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>stock-watcher</name>\n    <description>Manage and monitor a personal stock watchlist with support for adding, removing, listing stocks, and summarizing their recent performance using data from 10jqka.com.cn. Use when the user wants to track specific stocks, get performance summaries, or manage their watchlist.</description>\n    <location>~/.openclaw/workspace-main-stock/skills/stock-watcher/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>tushare</name>\n    <description>tushare是一个财经数据接口包，拥有丰富的数据内容，如股票、基金、期货、数字货币等行情数据，公司财务、基金经理等基本面数据。该模块通过标准化API方式统一了数据资产的对外服务方式，以帮助有需要的技术用户更实时、简洁、轻量的使用相关数据。</description>\n    <location>~/.openclaw/workspace-main-stock/skills/tushare-data/SKILL.md</location>\n  </skill>\n</available_skills>",
+      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>feishu-doc</name>\n    <description>Feishu document read/write operations. Activate when user mentions Feishu docs, cloud docs, or docx links.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-doc/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-drive</name>\n    <description>Feishu cloud storage file management. Activate when user mentions cloud space, folders, drive.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-drive/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-perm</name>\n    <description>Feishu permission management for documents and files. Activate when user mentions sharing, permissions, collaborators.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-perm/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-wiki</name>\n    <description>Feishu knowledge base navigation. Activate when user mentions knowledge base, wiki, or wiki links.\n</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/extensions/feishu/skills/feishu-wiki/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>~/.npm-global/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>tushare</name>\n    <description>tushare是一个财经数据接口包，拥有丰富的数据内容，如股票、基金、期货、数字货币等行情数据，公司财务、基金经理等基本面数据。该模块通过标准化API方式统一了数据资产的对外服务方式，以帮助有需要的技术用户更实时、简洁、轻量的使用相关数据。</description>\n    <location>~/.openclaw/workspace-main-stock/skills/tushare-data/SKILL.md</location>\n  </skill>\n</available_skills>",
       "skills": [
         {
           "name": "feishu-doc"
@@ -498,12 +498,6 @@
         {
           "name": "weather",
           "requiredEnv": []
-        },
-        {
-          "name": "find-skills"
-        },
-        {
-          "name": "stock-watcher"
         },
         {
           "name": "tushare"
@@ -575,22 +569,6 @@
           "disableModelInvocation": false
         },
         {
-          "name": "find-skills",
-          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
-          "filePath": "/home/openclaw/.agents/skills/find-skills/SKILL.md",
-          "baseDir": "/home/openclaw/.agents/skills/find-skills",
-          "source": "agents-skills-personal",
-          "disableModelInvocation": false
-        },
-        {
-          "name": "stock-watcher",
-          "description": "Manage and monitor a personal stock watchlist with support for adding, removing, listing stocks, and summarizing their recent performance using data from 10jqka.com.cn. Use when the user wants to track specific stocks, get performance summaries, or manage their watchlist.",
-          "filePath": "/home/openclaw/.openclaw/workspace-main-stock/skills/stock-watcher/SKILL.md",
-          "baseDir": "/home/openclaw/.openclaw/workspace-main-stock/skills/stock-watcher",
-          "source": "openclaw-workspace",
-          "disableModelInvocation": false
-        },
-        {
           "name": "tushare",
           "description": "tushare是一个财经数据接口包，拥有丰富的数据内容，如股票、基金、期货、数字货币等行情数据，公司财务、基金经理等基本面数据。该模块通过标准化API方式统一了数据资产的对外服务方式，以帮助有需要的技术用户更实时、简洁、轻量的使用相关数据。",
           "filePath": "/home/openclaw/.openclaw/workspace-main-stock/skills/tushare-data/SKILL.md",
@@ -605,8 +583,8 @@
     "model": "qwen3.5-plus",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773164478600,
-      "sessionId": "9e4e84d6-a3fb-44ce-a109-e1bc454c9c3e",
+      "generatedAt": 1773217974516,
+      "sessionId": "3947e9fd-69ac-4604-ba8e-a817581925c5",
       "sessionKey": "agent:main-stock:main",
       "provider": "custom-dashscope-aliyuncs-com",
       "model": "qwen3.5-plus",
@@ -625,9 +603,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 21513,
-        "projectContextChars": 5920,
-        "nonProjectContextChars": 15593
+        "chars": 20531,
+        "projectContextChars": 5860,
+        "nonProjectContextChars": 14671
       },
       "injectedWorkspaceFiles": [
         {
@@ -674,8 +652,8 @@
           "name": "HEARTBEAT.md",
           "path": "/home/openclaw/.openclaw/workspace-main-stock/HEARTBEAT.md",
           "missing": false,
-          "rawChars": 372,
-          "injectedChars": 372,
+          "rawChars": 312,
+          "injectedChars": 312,
           "truncated": false
         },
         {
@@ -688,7 +666,7 @@
         }
       ],
       "skills": {
-        "promptChars": 4412,
+        "promptChars": 3490,
         "entries": [
           {
             "name": "feishu-doc",
@@ -721,14 +699,6 @@
           {
             "name": "weather",
             "blockChars": 416
-          },
-          {
-            "name": "find-skills",
-            "blockChars": 475
-          },
-          {
-            "name": "stock-watcher",
-            "blockChars": 441
           },
           {
             "name": "tushare",
@@ -936,9 +906,9 @@
     },
     "lastChannel": "feishu",
     "lastTo": "ou_9d907d39fb19b50579ba289b30041fc5",
-    "contextTokens": 256000,
     "lastHeartbeatText": "✅ **股票监控完成** (2026-03-10 收盘后)\n\n发现 **6 只股票** 触发预警，已通过飞书发送通知：\n\n| 代码 | 名称 | 涨跌幅 | 触发规则 |\n|------|------|--------|----------|\n| 920876.BJ | 慧为智能 | -8.13% | 下跌>3% |\n| 601857.SH | 中国石油 | -7.20% | 下跌>3% + 个股规则 |\n| 601808.SH | 中海油服 | -6.87% | 下跌>3% |\n| 600256.SH | 广汇能源 | -5.64% | 下跌>3% |\n| 600583.SH | 海油工程 | -4.13% | 下跌>3% |\n| 000852.SZ | 石化机械 | -3.81% | 下跌>3% |\n\n**观察：** 今日油气板块普遍大跌，中国石油、中海油服、广汇能源、海油工程全部触发预警。",
-    "lastHeartbeatSentAt": 1773130168868
+    "lastHeartbeatSentAt": 1773130168868,
+    "contextTokens": 256000
   },
   "agent:main-stock:feishu:stock:direct:ou_0737da20bef21e4dff04d2b83f927208": {
     "sessionId": "ebabc3c6-4361-430c-8dc1-e856bb90c7bc",
