@@ -1,3 +1,4 @@
 browser
 extensions
 **/.git/
+agents/**/sessions

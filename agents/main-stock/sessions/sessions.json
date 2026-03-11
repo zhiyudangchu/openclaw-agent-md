@@ -942,7 +942,7 @@
   },
   "agent:main-stock:feishu:stock:direct:ou_0737da20bef21e4dff04d2b83f927208": {
     "sessionId": "ebabc3c6-4361-430c-8dc1-e856bb90c7bc",
-    "updatedAt": 1773216095396,
+    "updatedAt": 1773217799002,
     "systemSent": true,
     "abortedLastRun": false,
     "chatType": "direct",
@@ -1078,7 +1078,7 @@
     "model": "qwen3.5-plus",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773215814908,
+      "generatedAt": 1773217282876,
       "sessionId": "ebabc3c6-4361-430c-8dc1-e856bb90c7bc",
       "sessionKey": "agent:main-stock:feishu:stock:direct:ou_0737da20bef21e4dff04d2b83f927208",
       "provider": "custom-dashscope-aliyuncs-com",
