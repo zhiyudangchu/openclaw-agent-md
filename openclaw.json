@@ -196,6 +196,14 @@
         }
       },
       {
+        "id": "stock-prod",
+        "name": "stock-prod",
+        "workspace": "/home/openclaw/.openclaw/workspace-stock-prod",
+        "sandbox": {
+          "mode": "off"
+        }
+      },
+      {
         "id": "main-stock",
         "name": "main-stock",
         "workspace": "/home/openclaw/.openclaw/workspace-main-stock",
@@ -332,6 +340,13 @@
         "channel": "dingtalk",
         "accountId": "default"
       }
+    },
+    {
+      "agentId": "stock-prod",
+      "match": {
+        "channel": "feishu",
+        "accountId": "stock-prod"
+      }
     }
   ],
   "messages": {
@@ -376,6 +391,10 @@
       "enabled": true,
       "defaultAccount": "stock",
       "accounts": {
+        "stock-prod": {
+          "appId": "cli_a93bae9b79381cbb",
+          "appSecret": "gAgBt0CTT6qnydwBbz60Yg3x8OPiWiZI"
+        },
         "monitor": {
           "appId": "cli_a9280bd1dae31bef",
           "appSecret": "IoGwVOlXvNLWRkUjcXom3d1tQPzoGz1v"
