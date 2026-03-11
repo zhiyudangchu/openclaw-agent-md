@@ -14,7 +14,7 @@
 
 - 1、使用tushare-data技能，获取数据判断今日是否收盘或休市，未收盘或休市，则进行下一步；否则，结束本次任务；
 - 2、如果realtime-data.txt里的内容不为空，则清空后进行下一步；否则直接进行下一步；
-- 3、使用tushare-data技能，按照get-data-template.md内的格式要求获取自选股的实时日线数据，保存在realtime-data.txt里；
+- 3、使用tushare-data技能，按照get-data-template.md内的格式要求获取自选股的**实时**日线数据，注意这里是**实时日线**，不要从历史日线获取数据，保存在realtime-data.txt里；
 - 4、按照alert-rules.md中的预警规则和以下条件过滤获取到的实时数据：
    - 满足预警规则中任意一条条件；
    - 只返回满足预警规则的数据；
