@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.7",
-    "lastTouchedAt": "2026-03-11T15:35:37.469Z"
+    "lastTouchedAt": "2026-03-11T16:47:17.733Z"
   },
   "wizard": {
     "lastRunAt": "2026-03-11T15:35:37.452Z",
@@ -239,11 +239,12 @@
             "image": "openclaw-sandbox-browser:bookworm-slim",
             "containerPrefix": "feishu-monitor-browser-",
             "cdpPort": 9222,
+            "cdpSourceRange": "172.17.0.1/32",
             "vncPort": 5900,
             "noVncPort": 6080,
             "headless": false,
             "enableNoVnc": true,
-            "allowHostControl": false,
+            "allowHostControl": true,
             "autoStart": true,
             "autoStartTimeoutMs": 12000
           }
@@ -252,8 +253,15 @@
           "sandbox": {
             "tools": {
               "allow": [
-                "group:runtime", "group:fs", "group:sessions", "group:memory"
-              ]
+                "group:runtime",
+                "group:fs",
+                "group:sessions",
+                "group:memory",
+                "group:ui"
+              ],
+	      "deny":[
+	      	"broswer"
+	      ]
             }
           }
         }
@@ -389,7 +397,14 @@
   "gateway": {
     "port": 18789,
     "mode": "local",
-    "bind": "loopback",
+    "bind": "custom",
+    "customBindHost": "0.0.0.0",
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789"
+      ]
+    },
     "auth": {
       "mode": "token",
       "token": "263e60f7e59f5275aab570426d23ede20c5656a9d4e33058"

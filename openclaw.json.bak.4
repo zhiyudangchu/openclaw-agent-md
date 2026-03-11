@@ -1,12 +1,12 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.7",
-    "lastTouchedAt": "2026-03-08T06:46:19.093Z"
+    "lastTouchedAt": "2026-03-09T14:51:15.912Z"
   },
   "wizard": {
-    "lastRunAt": "2026-03-07T16:08:49.856Z",
-    "lastRunVersion": "2026.3.2",
-    "lastRunCommand": "doctor",
+    "lastRunAt": "2026-03-09T14:51:15.892Z",
+    "lastRunVersion": "2026.3.7",
+    "lastRunCommand": "configure",
     "lastRunMode": "local"
   },
   "browser": {
@@ -124,6 +124,22 @@
             },
             "contextWindow": 256000,
             "maxTokens": 254000
+          },
+          {
+            "id": "qwen3.5-397b-a17b",
+            "name": "qwen3.5-397b-a17b (Custom Provider)",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 16000,
+            "maxTokens": 4096
           }
         ]
       }
@@ -132,7 +148,7 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "custom-dashscope-aliyuncs-com/qwen3.5-35b-a3b",
+        "primary": "custom-dashscope-aliyuncs-com/qwen3.5-397b-a17b",
         "fallbacks": [
           "custom-dashscope-aliyuncs-com/qwen3.5-plus",
           "custom-dashscope-aliyuncs-com/qwen3.5-flash",
@@ -157,6 +173,9 @@
         },
         "custom-dashscope-aliyuncs-com/qwen3.5-35b-a3b": {
           "alias": "qwen3.5-35b-a3b"
+        },
+        "custom-dashscope-aliyuncs-com/qwen3.5-397b-a17b": {
+          "alias": "qwen3.5-397b-a17b"
         }
       },
       "workspace": "/home/openclaw/.openclaw/workspace",

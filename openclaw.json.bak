@@ -1,10 +1,10 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.7",
-    "lastTouchedAt": "2026-03-10T17:50:27.760Z"
+    "lastTouchedAt": "2026-03-11T15:35:37.469Z"
   },
   "wizard": {
-    "lastRunAt": "2026-03-10T17:50:27.753Z",
+    "lastRunAt": "2026-03-11T15:35:37.452Z",
     "lastRunVersion": "2026.3.7",
     "lastRunCommand": "doctor",
     "lastRunMode": "local"
@@ -147,7 +147,6 @@
   },
   "agents": {
     "defaults": {
-      "userTimezone": "Asia/Shanghai",
       "model": {
         "primary": "custom-dashscope-aliyuncs-com/qwen3.5-plus",
         "fallbacks": [
@@ -180,6 +179,7 @@
         }
       },
       "workspace": "/home/openclaw/.openclaw/workspace",
+      "userTimezone": "Asia/Shanghai",
       "compaction": {
         "mode": "safeguard"
       },
@@ -210,8 +210,6 @@
         "workspace": "/home/openclaw/.openclaw/workspace-main-stock",
         "heartbeat": {
           "every": "30m",
-          "target": "feishu",
-          "to": "ou_9d907d39fb19b50579ba289b30041fc5",
           "prompt": "如果HEARTBEAT.md存在（工作区上下文），请读取它。严格遵守。不要从之前的聊天中推断或重复旧任务。如果没有什么需要注意的，请回复HEARTBEAT_OK。"
         },
         "sandbox": {
@@ -243,19 +241,10 @@
             "cdpPort": 9222,
             "vncPort": 5900,
             "noVncPort": 6080,
-            "headless": false,
+            "headless": true,
             "enableNoVnc": true,
-            "allowHostControl": false,
-            "allowedControlUrls": [
-              "http://10.0.0.42:18791"
-            ],
-            "allowedControlHosts": [
-              "browser.lab.local",
-              "10.0.0.42"
-            ],
-            "allowedControlPorts": [
-              18791
-            ],
+            "allowHostControl": true,
+	    "cdpSourceRange": "172.17.0.1/32",
             "autoStart": true,
             "autoStartTimeoutMs": 12000
           }
@@ -264,7 +253,7 @@
           "sandbox": {
             "tools": {
               "allow": [
-                "group:*"
+                "group:runtime", "group:fs", "group:sessions", "group:memory","group:ui"
               ]
             }
           }
@@ -401,7 +390,7 @@
   "gateway": {
     "port": 18789,
     "mode": "local",
-    "bind": "loopback",
+    "bind": "lan",
     "auth": {
       "mode": "token",
       "token": "263e60f7e59f5275aab570426d23ede20c5656a9d4e33058"

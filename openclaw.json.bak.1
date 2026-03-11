@@ -1,12 +1,12 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.7",
-    "lastTouchedAt": "2026-03-10T07:26:36.833Z"
+    "lastTouchedAt": "2026-03-10T17:50:27.760Z"
   },
   "wizard": {
-    "lastRunAt": "2026-03-09T14:51:15.892Z",
+    "lastRunAt": "2026-03-10T17:50:27.753Z",
     "lastRunVersion": "2026.3.7",
-    "lastRunCommand": "configure",
+    "lastRunCommand": "doctor",
     "lastRunMode": "local"
   },
   "browser": {
@@ -147,6 +147,7 @@
   },
   "agents": {
     "defaults": {
+      "userTimezone": "Asia/Shanghai",
       "model": {
         "primary": "custom-dashscope-aliyuncs-com/qwen3.5-plus",
         "fallbacks": [
@@ -196,6 +197,14 @@
         }
       },
       {
+        "id": "stock-prod",
+        "name": "stock-prod",
+        "workspace": "/home/openclaw/.openclaw/workspace-stock-prod",
+        "sandbox": {
+          "mode": "off"
+        }
+      },
+      {
         "id": "main-stock",
         "name": "main-stock",
         "workspace": "/home/openclaw/.openclaw/workspace-main-stock",
@@ -214,79 +223,48 @@
         "name": "monitor",
         "workspace": "/home/openclaw/.openclaw/workspace-monitor",
         "sandbox": {
-          "mode": "off"
-        }
-      },
-      {
-        "id": "main-stock-ding",
-        "name": "main-stock-ding",
-        "workspace": "/home/openclaw/.openclaw/workspace-main-stock-ding",
-        "sandbox": {
-          "mode": "off"
-        }
-      },
-      {
-        "id": "public",
-        "name": "public",
-        "sandbox": {
-          "mode": "all",
-          "workspaceAccess": "ro",
-          "scope": "session",
-          "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
-          "docker": {
-            "image": "openclaw-sandbox-browser:bookworm-slim",
-            "containerPrefix": "dingtalk-public-sbx-",
-            "workdir": "/workspace",
-            "readOnlyRoot": false,
-            "network": "bridge",
-            "user": "1000:1000",
-            "setupCommand": "apt-get update && apt-get install -y git curl jq"
-          }
-        },
-        "tools": {
-          "sandbox": {
-            "tools": {
-              "allow": [
-                "group:runtime",
-                "group:fs",
-                "group:sessions",
-                "group:memory"
-              ]
-            }
-          }
-        }
-      },
-      {
-        "id": "stock",
-        "name": "stock",
-        "model": "custom-dashscope-aliyuncs-com/qwen3.5-122b-a10b",
-        "sandbox": {
           "mode": "all",
           "workspaceAccess": "rw",
           "scope": "session",
           "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
           "docker": {
             "image": "openclaw-sandbox-common:bookworm-slim-diy",
-            "containerPrefix": "feishu-sbx-",
+            "containerPrefix": "feishu-monitor-diysbx-",
             "workdir": "/home/sandbox",
             "readOnlyRoot": false,
             "network": "bridge",
             "user": "1000:1000",
-            "env": {
-              "FINNHUB_API_KEY": "d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg",
-              "TUSHARE_TOKEN": "68442b378fd881f50cc6ae402e7277b6f46061bcc7b1df17b4ca6318"
-            },
-            "setupCommand": "echo \"export FINNHUB_API_KEY=\\\"d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg\\\"\" >> ~/.bashrc && echo \"export TUSHARE_TOKEN=\\\"68442b378fd881f50cc6ae402e7277b6f46061bcc7b1df17b4ca6318\\\"\" >> ~/.bashrc && source ~/.bashrc"
+            "setupCommand": ""
+          },
+          "browser": {
+            "enabled": true,
+            "image": "openclaw-sandbox-browser:bookworm-slim",
+            "containerPrefix": "feishu-monitor-browser-",
+            "cdpPort": 9222,
+            "vncPort": 5900,
+            "noVncPort": 6080,
+            "headless": false,
+            "enableNoVnc": true,
+            "allowHostControl": false,
+            "allowedControlUrls": [
+              "http://10.0.0.42:18791"
+            ],
+            "allowedControlHosts": [
+              "browser.lab.local",
+              "10.0.0.42"
+            ],
+            "allowedControlPorts": [
+              18791
+            ],
+            "autoStart": true,
+            "autoStartTimeoutMs": 12000
           }
         },
         "tools": {
           "sandbox": {
             "tools": {
               "allow": [
-                "group:runtime",
-                "group:fs",
-                "group:sessions",
-                "group:memory"
+                "group:*"
               ]
             }
           }
@@ -306,7 +284,7 @@
   },
   "bindings": [
     {
-      "agentId": "public",
+      "agentId": "monitor",
       "match": {
         "channel": "dingtalk",
         "accountId": "default"
@@ -327,10 +305,10 @@
       }
     },
     {
-      "agentId": "main-stock-ding",
+      "agentId": "stock-prod",
       "match": {
-        "channel": "dingtalk",
-        "accountId": "default"
+        "channel": "feishu",
+        "accountId": "stock-prod"
       }
     }
   ],
@@ -375,9 +353,11 @@
     "feishu": {
       "enabled": true,
       "defaultAccount": "stock",
-      "groupPolicy": "allowlist",
-      "groupAllowFrom": ["oc_e5021f4489531f598034cdfc2e0394f6"],
       "accounts": {
+        "stock-prod": {
+          "appId": "cli_a93bae9b79381cbb",
+          "appSecret": "gAgBt0CTT6qnydwBbz60Yg3x8OPiWiZI"
+        },
         "monitor": {
           "appId": "cli_a9280bd1dae31bef",
           "appSecret": "IoGwVOlXvNLWRkUjcXom3d1tQPzoGz1v"
@@ -385,6 +365,12 @@
         "stock": {
           "appId": "cli_a92d6c78990a1bb6",
           "appSecret": "CqJiOLUUZRhwQf1VCK1Zce8oCCegpyyP"
+        },
+        "default": {
+          "groupPolicy": "allowlist",
+          "groupAllowFrom": [
+            "oc_e5021f4489531f598034cdfc2e0394f6"
+          ]
         }
       },
       "groups": {
