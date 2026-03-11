@@ -226,48 +226,8 @@
         }
       },
       {
-        "id": "main-stock-ding",
-        "name": "main-stock-ding",
-        "workspace": "/home/openclaw/.openclaw/workspace-main-stock-ding",
-        "sandbox": {
-          "mode": "off"
-        }
-      },
-      {
         "id": "public",
         "name": "public",
-        "sandbox": {
-          "mode": "all",
-          "workspaceAccess": "ro",
-          "scope": "session",
-          "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
-          "docker": {
-            "image": "openclaw-sandbox-browser:bookworm-slim",
-            "containerPrefix": "dingtalk-public-sbx-",
-            "workdir": "/workspace",
-            "readOnlyRoot": false,
-            "network": "bridge",
-            "user": "1000:1000",
-            "setupCommand": "apt-get update && apt-get install -y git curl jq"
-          }
-        },
-        "tools": {
-          "sandbox": {
-            "tools": {
-              "allow": [
-                "group:runtime",
-                "group:fs",
-                "group:sessions",
-                "group:memory"
-              ]
-            }
-          }
-        }
-      },
-      {
-        "id": "stock",
-        "name": "stock",
-        "model": "custom-dashscope-aliyuncs-com/qwen3.5-122b-a10b",
         "sandbox": {
           "mode": "all",
           "workspaceAccess": "rw",
@@ -275,16 +235,12 @@
           "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
           "docker": {
             "image": "openclaw-sandbox-common:bookworm-slim-diy",
-            "containerPrefix": "feishu-sbx-",
+            "containerPrefix": "dingtalk-public-sbx-",
             "workdir": "/home/sandbox",
             "readOnlyRoot": false,
             "network": "bridge",
             "user": "1000:1000",
-            "env": {
-              "FINNHUB_API_KEY": "d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg",
-              "TUSHARE_TOKEN": "68442b378fd881f50cc6ae402e7277b6f46061bcc7b1df17b4ca6318"
-            },
-            "setupCommand": "echo \"export FINNHUB_API_KEY=\\\"d6kjiv1r01qg51f46pc0d6kjiv1r01qg51f46pcg\\\"\" >> ~/.bashrc && echo \"export TUSHARE_TOKEN=\\\"68442b378fd881f50cc6ae402e7277b6f46061bcc7b1df17b4ca6318\\\"\" >> ~/.bashrc && source ~/.bashrc"
+            "setupCommand": "apt-get update && apt-get install -y git curl jq"
           }
         },
         "tools": {
@@ -332,13 +288,6 @@
       "match": {
         "channel": "feishu",
         "accountId": "monitor"
-      }
-    },
-    {
-      "agentId": "main-stock-ding",
-      "match": {
-        "channel": "dingtalk",
-        "accountId": "default"
       }
     },
     {
