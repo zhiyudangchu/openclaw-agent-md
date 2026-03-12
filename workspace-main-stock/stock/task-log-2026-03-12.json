@@ -1,0 +1,49 @@
+{
+  "task_id": "cron:3a0e37bb-8bac-4673-9d03-39d7faa392fa",
+  "task_name": "实时股价监控",
+  "execute_time": "2026-03-12 13:05:40",
+  "status": "success",
+  "api_calls": [
+    {
+      "api": "tushare.pro.rt_k",
+      "request": {
+        "ts_code": "601857.SH,603606.SH,002600.SZ,002961.SZ,001872.SZ"
+      },
+      "response": {
+        "code": 0,
+        "message": "success",
+        "data_count": 5
+      }
+    }
+  ],
+  "alerts": [
+    {
+      "ts_code": "603606.SH",
+      "name": "东方电缆",
+      "close": 65.66,
+      "pct_chg": 3.11,
+      "reason": "📈 上涨 > 1%"
+    },
+    {
+      "ts_code": "002600.SZ",
+      "name": "领益智造",
+      "close": 14.58,
+      "pct_chg": -2.8,
+      "reason": "📉 下跌 > 1%"
+    },
+    {
+      "ts_code": "001872.SZ",
+      "name": "招商港口",
+      "close": 21.82,
+      "pct_chg": 1.82,
+      "reason": "📈 上涨 > 1%"
+    }
+  ],
+  "notification": {
+    "channel": "feishu",
+    "account": "stock",
+    "receivers_count": 6,
+    "status": "success"
+  },
+  "errors": []
+}

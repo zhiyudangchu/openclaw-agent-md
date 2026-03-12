@@ -1,0 +1,19 @@
+[
+  {
+    "timestamp": "2026-03-12T10:31:40.096886",
+    "status": "success",
+    "errors": [],
+    "api_calls": [
+      {
+        "interface": "rt_k",
+        "params": {
+          "ts_code": "603606.SH,002600.SZ,002961.SZ,001872.SZ"
+        },
+        "result_count": 4,
+        "timestamp": "2026-03-12T10:31:40.223512"
+      }
+    ],
+    "alert_count": 4,
+    "message": "发现 4 只股票触发预警"
+  }
+]{"time": "2026-03-12 13:17:23", "task": "实时股价监控", "status": "SUCCESS", "alerts": 4, "receivers": 6}
