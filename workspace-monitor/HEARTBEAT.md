@@ -1,5 +1,21 @@
 # HEARTBEAT.md
 
-# Keep this file empty (or with only comments) to skip heartbeat API calls.
 
-# Add tasks below when you want the agent to check something periodically.
+## 主动推送规则
+- 满足立即通知要求时，推送给所有会话存活的用户
+
+**立即通知**：
+- 每天8:00，收集10条热点新闻和今日天气状况，推送给用户
+- 重要/紧急邮件到达
+- < 2 小时后的日程活动
+- 发现有趣或有价值的内容
+- 每天20:00汇报今日工作总结，解决了哪些问题
+
+**保持安静 (HEARTBEAT_OK)**：
+- 深夜时段 (23:00-08:00) 除非紧急
+- 用户明显忙碌时
+- 30 分钟内已经汇报过
+
+## 🔄 记忆维护（每周一次）
+- 整理最近的 memory/YYYY-MM-DD.md
+- 更新 MEMORY.md 中的重要信息

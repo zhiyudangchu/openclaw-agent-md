@@ -1,0 +1,2 @@
+# tushare key
+export TUSHARE_TOKEN=ff592aa74b18d383dcd07f59f57fce0207e8b8675032f8284245c55e
