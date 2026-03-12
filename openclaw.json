@@ -256,12 +256,11 @@
                 "group:runtime",
                 "group:fs",
                 "group:sessions",
-                "group:memory",
-                "group:ui"
+                "group:memory"
               ],
-	      "deny":[
-	      	"broswer"
-	      ]
+              "deny": [
+                "broswer"
+              ]
             }
           }
         }
