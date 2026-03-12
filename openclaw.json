@@ -226,7 +226,7 @@
         "workspace": "~/.openclaw/workspace-monitor",
         "sandbox": {
           "mode": "all",
-          "workspaceAccess": "none",
+          "workspaceAccess": "ro",
           "scope": "session",
           "workspaceRoot": "~/.openclaw/sandboxes",
           "docker": {
