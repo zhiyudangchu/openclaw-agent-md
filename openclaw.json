@@ -227,7 +227,7 @@
           "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
           "docker": {
             "image": "openclaw-sandbox-common:bookworm-slim-diy",
-            "containerPrefix": "feishu-monitor-diysbx-",
+            "containerPrefix": "monitor-diysbx-",
             "workdir": "/home/sandbox",
             "readOnlyRoot": false,
             "network": "bridge",
@@ -237,7 +237,7 @@
           "browser": {
             "enabled": true,
             "image": "openclaw-sandbox-browser:bookworm-slim",
-            "containerPrefix": "feishu-monitor-browser-",
+            "containerPrefix": "monitor-browser-",
             "cdpPort": 9222,
             "cdpSourceRange": "172.17.0.1/32",
             "vncPort": 5900,
