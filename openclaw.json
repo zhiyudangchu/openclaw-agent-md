@@ -235,7 +235,6 @@
             "workdir": "/home/openclaw",
             "readOnlyRoot": false,
             "network": "bridge",
-            "user": "1000:1000",
             "setupCommand": ""
           },
           "browser": {
