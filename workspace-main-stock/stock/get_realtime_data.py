@@ -5,82 +5,65 @@
 """
 import os
 import sys
-import json
-from datetime import datetime
 import tushare as ts
+from datetime import datetime
 
 # 读取环境变量中的 token
 token = os.getenv('TUSHARE_TOKEN')
-
 if not token:
-    print("ERROR: TUSHARE_TOKEN 环境变量未设置")
+    print("错误：未找到 TUSHARE_TOKEN 环境变量")
     sys.exit(1)
 
 # 初始化 pro 接口
 pro = ts.pro_api(token)
 
-# 自选股列表
-stocks = [
-    "601857.SH",  # 中国石油
-    "603606.SH",  # 东方电缆
-    "002600.SZ",  # 领益智造
-    "002961.SZ",  # 瑞达期货
-    "001872.SZ",  # 招商港口
-]
+# 自选股列表（从 stock-list.txt 读取）
+stock_list_path = '/home/openclaw/.openclaw/workspace-main-stock/stock/stock-list.txt'
+stocks = []
+with open(stock_list_path, 'r', encoding='utf-8') as f:
+    for line in f:
+        line = line.strip()
+        if line and not line.startswith('#'):
+            parts = line.split()
+            if len(parts) >= 3:
+                code = parts[0]
+                name = parts[1]
+                board = parts[2]
+                # 转换为 ts_code 格式
+                if board == 'SH':
+                    ts_code = f"{code}.SH"
+                elif board == 'SZ':
+                    ts_code = f"{code}.SZ"
+                else:
+                    ts_code = f"{code}.{board}"
+                stocks.append(ts_code)
 
-# 获取实时日线数据
-ts_code_param = ",".join(stocks)
-print(f"请求参数：ts_code={ts_code_param}")
+if not stocks:
+    print("错误：自选股列表为空")
+    sys.exit(1)
+
+# 构建 ts_code 参数（支持批量）
+ts_codes = ','.join(stocks)
+print(f"获取股票：{ts_codes}")
 
 try:
-    df = pro.rt_k(ts_code=ts_code_param)
-    print(f"返回数据行数：{len(df)}")
-    print(f"返回列名：{list(df.columns)}")
-    print("\n数据内容：")
-    print(df.to_string())
+    # 调用 rt_k 接口获取实时日线数据
+    df = pro.rt_k(ts_code=ts_codes)
     
-    # 转换为 JSON 输出
-    result = []
-    for idx, row in df.iterrows():
-        record = {
-            "ts_code": row.get("ts_code", ""),
-            "name": row.get("name", ""),
-            "pre_close": float(row.get("pre_close", 0)) if row.get("pre_close") is not None else 0,
-            "close": float(row.get("close", 0)) if row.get("close") is not None else 0,
-            "high": float(row.get("high", 0)) if row.get("high") is not None else 0,
-            "open": float(row.get("open", 0)) if row.get("open") is not None else 0,
-            "low": float(row.get("low", 0)) if row.get("low") is not None else 0,
-            "vol": int(row.get("vol", 0)) if row.get("vol") is not None else 0,
-            "amount": int(row.get("amount", 0)) if row.get("amount") is not None else 0,
-            "trade_time": row.get("trade_time", ""),
-        }
-        # 计算涨跌幅和涨跌额
-        if record["pre_close"] > 0:
-            record["change"] = record["close"] - record["pre_close"]
-            record["pct_chg"] = (record["change"] / record["pre_close"]) * 100
-        else:
-            record["change"] = 0
-            record["pct_chg"] = 0
-        result.append(record)
+    if df is None or df.empty:
+        print("错误：未获取到数据")
+        sys.exit(1)
     
-    # 输出 JSON 格式数据
-    print("\n===JSON 输出===")
-    output = {
-        "code": 0,
-        "message": "success",
-        "data": {
-            "items": result,
-            "update_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        }
-    }
-    print(json.dumps(output, ensure_ascii=False, indent=2))
+    # 输出数据（用于后续处理）
+    print("\n=== 实时日线数据 ===")
+    print(df.to_string(index=False))
+    
+    # 保存到文件
+    output_path = '/home/openclaw/.openclaw/workspace-main-stock/stock/realtime-data.txt'
+    df.to_csv(output_path, index=False, encoding='utf-8-sig')
+    print(f"\n数据已保存到：{output_path}")
+    print(f"共获取 {len(df)} 条记录")
     
 except Exception as e:
-    print(f"ERROR: {str(e)}")
-    output = {
-        "code": -1,
-        "message": str(e),
-        "data": None
-    }
-    print(json.dumps(output, ensure_ascii=False, indent=2))
+    print(f"错误：{str(e)}")
     sys.exit(1)

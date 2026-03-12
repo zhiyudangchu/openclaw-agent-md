@@ -22,3 +22,4 @@ node_modules/
 **/.npm/
 **/*.js
 **/.cache/
+**/**.py
