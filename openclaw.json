@@ -226,13 +226,13 @@
         "workspace": "/home/openclaw/.openclaw/workspace-monitor",
         "sandbox": {
           "mode": "all",
-          "workspaceAccess": "ro",
+          "workspaceAccess": "none",
           "scope": "session",
           "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
           "docker": {
-            "image": "openclaw-sandbox-common:bookworm-slim-diy",
+            "image": "ubuntu-slim-full",
             "containerPrefix": "monitor-diysbx-",
-            "workdir": "/home/sandbox",
+            "workdir": "/home/openclaw",
             "readOnlyRoot": false,
             "network": "bridge",
             "user": "1000:1000",
@@ -246,7 +246,7 @@
             "cdpSourceRange": "172.17.0.1/32",
             "vncPort": 5900,
             "noVncPort": 6080,
-            "headless": false,
+            "headless": true,
             "enableNoVnc": true,
             "allowHostControl": true,
             "autoStart": true,
@@ -261,10 +261,10 @@
                 "group:fs",
                 "group:sessions",
                 "group:memory",
-                "broswer"
+                "group:ui"
               ],
               "deny": [
-                ""
+               
               ]
             }
           }

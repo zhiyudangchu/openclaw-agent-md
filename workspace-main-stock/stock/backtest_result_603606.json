@@ -1,0 +1,15 @@
+{
+  "stock": "603606.SH",
+  "stock_name": "东方电缆",
+  "period_start": "2024-01-02",
+  "period_end": "2026-03-12",
+  "initial_capital": 1000000,
+  "final_value": 923542.7640000021,
+  "total_return": -7.645723599999794,
+  "max_drawdown": 20.559511029717875,
+  "total_trades": 21,
+  "profitable_trades": 5,
+  "hit_rate": 23.809523809523807,
+  "buy_signals": 22,
+  "sell_signals": 21
+}

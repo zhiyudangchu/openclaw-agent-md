@@ -24,6 +24,10 @@ WORKDIR /home/openclaw
 # 示例：添加普通用户（可选，符合安全规范）
 RUN useradd -m openclaw && echo "openclaw ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER openclaw
+# openclaw加入root用户组，允许访问宿主机资源（按需调整权限）
+RUN sudo usermod -aG root openclaw
+# home目录权限调整，确保用户访问
+RUN sudo chown -R openclaw:openclaw /home/openclaw
 
 # 容器启动命令（按需修改）
 CMD ["sleep", "infinity"]

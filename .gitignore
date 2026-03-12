@@ -23,3 +23,8 @@ node_modules/
 **/*.js
 **/.cache/
 **/**.py
+**/.openclaw/
+**/**.pdf
+**/**.csv
+**/**.png
+**/**.jpg
