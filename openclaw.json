@@ -223,16 +223,16 @@
       {
         "id": "monitor",
         "name": "monitor",
-        "workspace": "/home/openclaw/.openclaw/workspace-monitor",
+        "workspace": "~/.openclaw/workspace-monitor",
         "sandbox": {
           "mode": "all",
           "workspaceAccess": "none",
           "scope": "session",
-          "workspaceRoot": "/home/openclaw/.openclaw/sandboxes",
+          "workspaceRoot": "~/.openclaw/sandboxes",
           "docker": {
             "image": "ubuntu-slim-full",
             "containerPrefix": "monitor-diysbx-",
-            "workdir": "/home/openclaw",
+            "workdir": "~/.openclaw/workspace-monitor",
             "readOnlyRoot": false,
             "network": "bridge",
             "setupCommand": ""
