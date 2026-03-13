@@ -1,65 +1,28 @@
 {
   "task_name": "实时股价监控",
-  "execution_time": "2026-03-12 09:55:47",
-  "status": "completed",
+  "execute_time": "2026-03-13 09:46:55",
+  "market_status": "开盘",
+  "stocks_checked": 5,
   "api_calls": [
     {
-      "interface": "rt_k",
+      "api": "trade_cal",
       "params": {
-        "ts_code": "603606.SH,002600.SZ,002961.SZ,001872.SZ"
+        "exchange": "SSE",
+        "start_date": "20260313",
+        "end_date": "20260313"
       },
-      "result_count": 4,
-      "status": "success"
+      "result": "市场开盘"
+    },
+    {
+      "api": "rt_k",
+      "params": {
+        "ts_code": "601857.SH,603606.SH,002600.SZ,002961.SZ,001872.SZ"
+      },
+      "result": "成功获取 5 条记录"
     }
   ],
-  "data_summary": {
-    "total_stocks": 4,
-    "alert_triggered": 0,
-    "stocks_data": [
-      {
-        "code": "603606.SH",
-        "name": "东方电缆",
-        "price": 62.78,
-        "change_pct": -1.41
-      },
-      {
-        "code": "002600.SZ",
-        "name": "领益智造",
-        "price": 14.76,
-        "change_pct": -1.6
-      },
-      {
-        "code": "002961.SZ",
-        "name": "瑞达期货",
-        "price": 26.82,
-        "change_pct": -0.33
-      },
-      {
-        "code": "001872.SZ",
-        "name": "招商港口",
-        "price": 21.62,
-        "change_pct": 0.89
-      }
-    ]
-  },
-  "alert_rules": {
-    "general": [
-      "下跌 > 3%",
-      "上涨 > 5%"
-    ],
-    "special": {
-      "601857.SH": [
-        "涨幅 > 2%",
-        "跌幅 > 1%"
-      ]
-    }
-  },
-  "actions_taken": [
-    "获取实时日线数据 (rt_k 接口)",
-    "计算涨跌幅",
-    "应用预警规则过滤",
-    "无触发预警数据",
-    "清空 realtime-data.txt"
-  ],
+  "alert_rules_status": "已关闭",
+  "alerts_triggered": 0,
+  "alerts_sent": 0,
   "errors": []
 }

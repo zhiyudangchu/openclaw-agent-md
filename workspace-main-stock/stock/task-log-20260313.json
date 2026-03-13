@@ -1,0 +1,50 @@
+{
+  "task_name": "实时股价监控",
+  "execution_time": "2026-03-13 09:51:25",
+  "status": "成功",
+  "api_calls": [
+    {
+      "interface": "rt_k",
+      "input": {
+        "ts_code": "601857.SH,603606.SH,002600.SZ,002961.SZ,001872.SZ"
+      },
+      "output": "5 条记录",
+      "status": "成功"
+    }
+  ],
+  "market_status": {
+    "date": "20260313",
+    "is_open": true,
+    "trading_time": true
+  },
+  "alert_summary": {
+    "total_stocks": 5,
+    "triggered_count": 3,
+    "triggered_stocks": [
+      {
+        "code": "002961.SZ",
+        "name": "瑞达期货",
+        "change": -6.61,
+        "reason": "下跌 > 1%"
+      },
+      {
+        "code": "603606.SH",
+        "name": "东方电缆",
+        "change": 2.4,
+        "reason": "上涨 > 1%"
+      },
+      {
+        "code": "002600.SZ",
+        "name": "领益智造",
+        "change": -1.03,
+        "reason": "下跌 > 1%"
+      }
+    ]
+  },
+  "notification": {
+    "channel": "feishu",
+    "recipients": 6,
+    "status": "成功"
+  },
+  "errors": []
+}
