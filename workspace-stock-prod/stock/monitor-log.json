@@ -1,0 +1,202 @@
+{
+  "start_time": "2026-03-13 10:34:31",
+  "steps": [
+    {
+      "step": 1,
+      "action": "read_stock_list",
+      "result": [
+        "601857.SH",
+        "600028.SH",
+        "002958.SZ",
+        "002600.SZ",
+        "603606.SH"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "read_alert_rules",
+      "result": {
+        "common": [
+          {
+            "type": "down",
+            "threshold": -0.5
+          },
+          {
+            "type": "up",
+            "threshold": 1.0
+          }
+        ],
+        "stocks": {
+          "601857.SH": {
+            "type": "both",
+            "threshold": 1.0
+          }
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "get_realtime_data",
+      "input": {
+        "ts_code": "601857.SH,600028.SH,002958.SZ,002600.SZ,603606.SH"
+      },
+      "output": [
+        {
+          "ts_code": "601857.SH",
+          "name": "中国石油",
+          "pre_close": 12.23,
+          "high": 12.39,
+          "open": 12.32,
+          "low": 12.06,
+          "close": 12.08,
+          "vol": 155481293,
+          "amount": 1898953667.0,
+          "num": 94588
+        },
+        {
+          "ts_code": "600028.SH",
+          "name": "中国石化",
+          "pre_close": 6.46,
+          "high": 6.51,
+          "open": 6.49,
+          "low": 6.35,
+          "close": 6.35,
+          "vol": 240920871,
+          "amount": 1545840690.0,
+          "num": 87284
+        },
+        {
+          "ts_code": "002958.SZ",
+          "name": "青农商行",
+          "pre_close": 3.17,
+          "high": 3.18,
+          "open": 3.17,
+          "low": 3.14,
+          "close": 3.16,
+          "vol": 24921724,
+          "amount": 78764959.08,
+          "num": 6489
+        },
+        {
+          "ts_code": "002600.SZ",
+          "name": "领益智造",
+          "pre_close": 14.6,
+          "high": 14.59,
+          "open": 14.44,
+          "low": 14.35,
+          "close": 14.54,
+          "vol": 25886933,
+          "amount": 374397279.24,
+          "num": 29742
+        },
+        {
+          "ts_code": "603606.SH",
+          "name": "东方电缆",
+          "pre_close": 66.34,
+          "high": 69.8,
+          "open": 67.0,
+          "low": 67.0,
+          "close": 69.25,
+          "vol": 15833519,
+          "amount": 1085347904.0,
+          "num": 33516
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "action": "format_data",
+      "result": [
+        {
+          "ts_code": "601857.SH",
+          "name": "中国石油",
+          "close": 12.08,
+          "pct_change": -1.2264922322158656,
+          "change_amount": -0.15000000000000036,
+          "trade_time": "2026-03-13 10:34:31"
+        },
+        {
+          "ts_code": "600028.SH",
+          "name": "中国石化",
+          "close": 6.35,
+          "pct_change": -1.7027863777089833,
+          "change_amount": -0.11000000000000032,
+          "trade_time": "2026-03-13 10:34:31"
+        },
+        {
+          "ts_code": "002958.SZ",
+          "name": "青农商行",
+          "close": 3.16,
+          "pct_change": -0.3154574132492046,
+          "change_amount": -0.009999999999999787,
+          "trade_time": "2026-03-13 10:34:31"
+        },
+        {
+          "ts_code": "002600.SZ",
+          "name": "领益智造",
+          "close": 14.54,
+          "pct_change": -0.41095890410959246,
+          "change_amount": -0.0600000000000005,
+          "trade_time": "2026-03-13 10:34:31"
+        },
+        {
+          "ts_code": "603606.SH",
+          "name": "东方电缆",
+          "close": 69.25,
+          "pct_change": 4.386493819716606,
+          "change_amount": 2.9099999999999966,
+          "trade_time": "2026-03-13 10:34:31"
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "action": "save_realtime_data",
+      "file": "realtime-data.txt"
+    },
+    {
+      "step": 6,
+      "action": "filter_alerts",
+      "result": [
+        {
+          "ts_code": "603606.SH",
+          "name": "东方电缆",
+          "close": 69.25,
+          "pct_change": 4.386493819716606,
+          "change_amount": 2.9099999999999966,
+          "trade_time": "2026-03-13 10:34:31"
+        },
+        {
+          "ts_code": "600028.SH",
+          "name": "中国石化",
+          "close": 6.35,
+          "pct_change": -1.7027863777089833,
+          "change_amount": -0.11000000000000032,
+          "trade_time": "2026-03-13 10:34:31"
+        },
+        {
+          "ts_code": "601857.SH",
+          "name": "中国石油",
+          "close": 12.08,
+          "pct_change": -1.2264922322158656,
+          "change_amount": -0.15000000000000036,
+          "trade_time": "2026-03-13 10:34:31"
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "action": "generate_message",
+      "result": "🚨 **股价预警通知** 🚨\n\n| 代码 | 名称 | 当前价 | 涨跌幅 | 涨跌额 | 时间 |\n|------|------|--------|--------|--------|------|\n| 603606 | 东方电缆 | ¥69.25 | +4.39% | +¥2.91 | 34:31 |\n| 600028 | 中国石化 | ¥6.35 | -1.70% | ¥-0.11 | 34:31 |\n| 601857 | 中国石油 | ¥12.08 | -1.23% | ¥-0.15 | 34:31 |\n\n⚙️ **预警规则**\n- 📉 下跌 > 0.5% → 触发\n- 📈 上涨 > 1% → 触发\n- 601857.SH (中国石油): 涨跌 > 1% → 触发\n\n**【数据来源】**\n- 数据来源：Tushare Pro\n- 更新时间：2026-03-13 10:34"
+    },
+    {
+      "step": 8,
+      "action": "read_receivers",
+      "result": [
+        "ou_9d907d39fb19b50579ba289b30041fc5"
+      ]
+    }
+  ],
+  "errors": [],
+  "end_time": "2026-03-13 10:34:31"
+}

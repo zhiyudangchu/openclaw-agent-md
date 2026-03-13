@@ -1,66 +1,28 @@
 {
-  "start_time": "2026-03-13 10:31:53",
-  "steps": [
+  "task_id": "cron_3a0e37bb",
+  "start_time": "2026-03-13 10:41:48",
+  "status": "completed",
+  "api_calls": [
     {
-      "step": 1,
-      "action": "check_market_status",
-      "result": "is_open=True, status=交易中"
-    },
-    {
-      "step": 2,
-      "action": "clear_realtime_data",
-      "result": "success"
-    },
-    {
-      "step": 3,
-      "action": "get_realtime_data",
+      "interface": "trade_cal",
       "params": {
-        "ts_codes": "601857.SH,603606.SH,002600.SZ,002961.SZ,001872.SZ"
+        "date": "20260313"
       },
-      "result": "records=5"
+      "result_count": 1,
+      "status": "success",
+      "time": "2026-03-13 10:41:48"
     },
     {
-      "step": 4,
-      "action": "check_alert_rules",
-      "result": "alert_count=3",
-      "alert_data": [
-        {
-          "ts_code": "603606.SH",
-          "name": "东方电缆",
-          "close": 69.13,
-          "pct_change": 4.205607476635502,
-          "change_amount": 2.789999999999992,
-          "trade_time": "2026-03-13 10:31:53",
-          "alert_type": "up"
-        },
-        {
-          "ts_code": "601857.SH",
-          "name": "中国石油",
-          "close": 12.1,
-          "pct_change": -1.0629599345870873,
-          "change_amount": -0.13000000000000078,
-          "trade_time": "2026-03-13 10:31:53",
-          "alert_type": "down_custom"
-        },
-        {
-          "ts_code": "002961.SZ",
-          "name": "瑞达期货",
-          "close": 26.1,
-          "pct_change": -5.1598837209302255,
-          "change_amount": -1.4199999999999982,
-          "trade_time": "2026-03-13 10:31:53",
-          "alert_type": "down"
-        }
-      ]
-    },
-    {
-      "step": 5,
-      "action": "format_output",
-      "result": "success"
+      "interface": "rt_k",
+      "params": {
+        "ts_code": "601857.SH,603606.SH,002600.SZ,002961.SZ,001872.SZ"
+      },
+      "result_count": 5,
+      "status": "success",
+      "time": "2026-03-13 10:41:48"
     }
   ],
   "errors": [],
-  "end_time": "2026-03-13 10:31:53",
-  "status": "alert_triggered",
-  "alert_message": "🚨 股价预警通知\n\n| 代码 | 名称 | 当前价 | 涨跌幅 | 涨跌额 | 时间 |\n|------|------|--------|--------|--------|------|\n| 603606 | 东方电缆 | ¥69.13 | +4.21% | ¥2.79 | 10:31 |\n| 601857 | 中国石油 | ¥12.10 | -1.06% | ¥-0.13 | 10:31 |\n| 002961 | 瑞达期货 | ¥26.10 | -5.16% | ¥-1.42 | 10:31 |\n\n⚙️ 预警规则\n- 📉 下跌 > 1.0% → 触发\n- 📈 上涨 > 1.0% → 触发\n\n**【数据来源】**\n- 数据来源：Tushare Pro\n- 更新时间：2026-03-13 10:31"
+  "alerts": [],
+  "end_time": "2026-03-13 10:41:48"
 }
