@@ -1,139 +1,122 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-根据预警规则过滤实时数据
+根据预警规则过滤数据
 """
 
 import os
+import pandas as pd
 from datetime import datetime
 
-def read_realtime_data():
-    """读取实时数据文件"""
-    data_path = os.path.expanduser('~/.openclaw/workspace-main-stock/stock/realtime-data.txt')
-    stocks = []
-    
-    with open(data_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    
-    # 跳过头部信息
-    for line in lines:
-        line = line.strip()
-        if not line or line.startswith('数据时间') or line.startswith('数据来源') or line.startswith('-'):
-            continue
-        
-        parts = line.split('|')
-        if len(parts) >= 5:
-            stocks.append({
-                'ts_code': parts[0],
-                'name': parts[1],
-                'close': float(parts[2]),
-                'pct_chg': float(parts[3]),
-                'change': float(parts[4]),
-                'time': parts[5] if len(parts) > 5 else ''
-            })
-    
-    return stocks
-
-def check_alert_rules(stock):
+def parse_realtime_data(file_path):
     """
-    检查是否满足预警规则
-    
-    通用规则:
-    - 下跌 > 3% → 触发
-    - 上涨 > 5% → 触发
-    
-    个股专属规则:
-    - 中国石油 (601857.SH): 涨幅 > 2% 或 跌幅 > 1% → 触发
+    解析实时数据文件
     """
-    ts_code = stock['ts_code']
-    pct_chg = stock['pct_chg']
-    
-    # 检查中国石油专属规则
-    if ts_code == '601857.SH':
-        if pct_chg > 2:
-            return True, '🟢 涨幅 > 2% (专属规则)'
-        elif pct_chg < -1:
-            return True, '🔴 跌幅 > 1% (专属规则)'
-    
-    # 通用规则
-    if pct_chg < -3:
-        return True, f'📉 下跌 > 3% ({pct_chg:.2f}%)'
-    elif pct_chg > 5:
-        return True, f'📈 上涨 > 5% ({pct_chg:.2f}%)'
-    
-    return False, None
+    data = []
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith('#') or not line or line.startswith('代码'):
+                continue
+            
+            parts = line.split('\t')
+            if len(parts) >= 11:
+                data.append({
+                    'code': parts[0],
+                    'name': parts[1],
+                    'close': float(parts[2]),
+                    'pre_close': float(parts[3]),
+                    'change_pct': float(parts[4].replace('%', '')),
+                    'change_amt': float(parts[5]),
+                    'open': float(parts[6]),
+                    'high': float(parts[7]),
+                    'low': float(parts[8]),
+                    'vol': int(parts[9]),
+                    'amount': float(parts[10]),
+                    'time': parts[11] if len(parts) > 11 else ''
+                })
+    return data
 
-def filter_alerts(stocks):
-    """过滤出满足预警条件的股票"""
+def check_alert_rules(data):
+    """
+    检查预警规则
+    规则（已关闭，但保留逻辑）：
+    - 通用规则（已关闭）：
+      - 下跌 > 1% → 触发
+      - 上涨 > 1% → 触发
+    - 个股专属规则（已关闭）：
+      - 中国石油 (601857.SH): 涨幅 > 2% 或 跌幅 > 1% → 触发
+    
+    由于规则已关闭，返回空列表
+    """
     alerts = []
     
-    for stock in stocks:
-        is_alert, reason = check_alert_rules(stock)
-        if is_alert:
-            stock['alert_reason'] = reason
-            alerts.append(stock)
+    # 规则状态：已关闭 ⛔
+    # 所有规则都被划掉了，不触发任何预警
+    rule_status = "已关闭"
     
-    # 按涨跌幅排序（绝对值大的在前）
-    alerts.sort(key=lambda x: abs(x['pct_chg']), reverse=True)
+    if rule_status == "已关闭":
+        print("预警规则状态：已关闭 ⛔")
+        print("不触发任何预警")
+        return []
+    
+    # 以下为规则开启时的逻辑（保留参考）
+    for stock in data:
+        change_pct = stock['change_pct']
+        code = stock['code']
+        name = stock['name']
+        
+        triggered = False
+        reason = []
+        
+        # 通用规则
+        if change_pct < -1.0:
+            triggered = True
+            reason.append(f"下跌 {change_pct:.2f}% > 1%")
+        elif change_pct > 1.0:
+            triggered = True
+            reason.append(f"上涨 {change_pct:.2f}% > 1%")
+        
+        # 个股专属规则 - 中国石油
+        if code == '601857':
+            if change_pct > 2.0:
+                triggered = True
+                reason.append(f"涨幅 {change_pct:.2f}% > 2% (个股规则)")
+            elif change_pct < -1.0:
+                triggered = True
+                reason.append(f"跌幅 {change_pct:.2f}% > 1% (个股规则)")
+        
+        if triggered:
+            stock['alert_reason'] = '; '.join(reason)
+            alerts.append(stock)
     
     return alerts
 
-def format_alert_table(alerts):
-    """格式化预警数据为表格"""
-    if not alerts:
-        return ""
+if __name__ == "__main__":
+    file_path = os.path.join(os.path.dirname(__file__), 'realtime-data.txt')
+    data = parse_realtime_data(file_path)
     
-    lines = []
-    lines.append("🚨 **股票预警通知** 🚨")
-    lines.append("")
-    lines.append("| 代码 | 名称 | 当前价 | 涨跌幅 | 涨跌额 | 时间 |")
-    lines.append("|------|------|--------|--------|-------|------|")
+    print(f"共读取 {len(data)} 条数据")
     
-    for stock in alerts[:10]:  # 最多输出 10 条
-        time_short = stock['time'].split(' ')[1][:5] if ' ' in stock['time'] else stock['time'][:5]
-        pct_sign = '+' if stock['pct_chg'] >= 0 else ''
-        change_sign = '+' if stock['change'] >= 0 else ''
-        
-        line = f"| {stock['ts_code'].split('.')[0]} | {stock['name']} | ¥{stock['close']:.2f} | {pct_sign}{stock['pct_chg']:.2f}% | {change_sign}¥{stock['change']:.2f} | {time_short} |"
-        lines.append(line)
+    alerts = check_alert_rules(data)
     
-    lines.append("")
-    lines.append("⚙️ **预警规则**")
-    lines.append("- 📉 下跌 > 3% → 触发")
-    lines.append("- 📈 上涨 > 5% → 触发")
-    lines.append("- 中国石油专属：🟢 涨幅 > 2% | 🔴 跌幅 > 1%")
-    lines.append("")
-    lines.append(f"**【数据来源】**")
-    lines.append("- 数据来源：Tushare Pro (rt_k 接口)")
-    lines.append(f"- 更新时间：{datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    
-    return '\n'.join(lines)
-
-def main():
-    # 读取实时数据
-    stocks = read_realtime_data()
-    print(f"读取到 {len(stocks)} 只股票数据")
-    
-    # 过滤预警
-    alerts = filter_alerts(stocks)
-    print(f"筛选出 {len(alerts)} 只预警股票")
+    print(f"\n触发预警的股票数量：{len(alerts)}")
     
     if alerts:
-        # 输出预警表格
-        alert_table = format_alert_table(alerts)
-        print(alert_table)
-        
-        # 保存预警数据
-        alert_path = os.path.expanduser('~/.openclaw/workspace-main-stock/stock/alert-data.txt')
-        with open(alert_path, 'w', encoding='utf-8') as f:
-            f.write(alert_table)
-        print(f"预警数据已保存：{alert_path}")
-        
-        # 输出纯文本格式用于消息推送
-        print("\n--- 推送消息格式 ---")
-        print(alert_table)
-    else:
-        print("无满足预警条件的股票")
-
-if __name__ == "__main__":
-    main()
+        print("\n预警详情:")
+        for stock in alerts:
+            print(f"  {stock['code']} {stock['name']}: {stock['alert_reason']}")
+    
+    # 输出 JSON 格式供后续使用
+    import json
+    output = {
+        'total': len(data),
+        'alerts': len(alerts),
+        'alert_list': alerts,
+        'rule_status': '已关闭'
+    }
+    
+    with open(os.path.join(os.path.dirname(__file__), 'alert-result.json'), 'w', encoding='utf-8') as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+    
+    print(f"\n结果已保存到 alert-result.json")

@@ -1,0 +1,58 @@
+{
+  "task_name": "实时股价监控",
+  "execution_time": "2026-03-13 13:45:00",
+  "status": "success",
+  "api_calls": [
+    {
+      "api": "trade_cal",
+      "description": "检查交易日历",
+      "params": {
+        "exchange": "SSE",
+        "start_date": "20260313",
+        "end_date": "20260313"
+      },
+      "result": {
+        "is_open": "1",
+        "status": "交易中"
+      }
+    },
+    {
+      "api": "rt_k",
+      "description": "获取实时日线数据",
+      "params": {
+        "ts_code": "601857.SH,600028.SH,002958.SZ,002600.SZ,603606.SH"
+      },
+      "result": {
+        "records_count": 5,
+        "stocks": [
+          {"ts_code": "601857.SH", "name": "中国石油", "close": 12.07, "pct_chg": -1.31},
+          {"ts_code": "600028.SH", "name": "中国石化", "close": 6.35, "pct_chg": -1.70},
+          {"ts_code": "002958.SZ", "name": "青农商行", "close": 3.57, "pct_chg": -0.28},
+          {"ts_code": "002600.SZ", "name": "领益智造", "close": 14.49, "pct_chg": -0.75},
+          {"ts_code": "603606.SH", "name": "东方电缆", "close": 69.02, "pct_chg": 4.04}
+        ]
+      }
+    }
+  ],
+  "alert_rules": {
+    "generic_down": -0.5,
+    "generic_up": 1.0,
+    "custom": {
+      "601857.SH": 1.0
+    }
+  },
+  "alerts_triggered": [
+    {"ts_code": "603606.SH", "name": "东方电缆", "pct_chg": 4.04, "reason": "上涨 > 1%"},
+    {"ts_code": "600028.SH", "name": "中国石化", "pct_chg": -1.70, "reason": "下跌 > 0.5%"},
+    {"ts_code": "601857.SH", "name": "中国石油", "pct_chg": -1.31, "reason": "下跌 > 0.5%"},
+    {"ts_code": "002600.SZ", "name": "领益智造", "pct_chg": -0.75, "reason": "下跌 > 0.5%"}
+  ],
+  "notification": {
+    "channel": "feishu",
+    "account": "stock-prod",
+    "recipients": ["ou_1381035daaed5a2a9d8f7b11ef81e3d7"],
+    "status": "sent",
+    "alert_count": 4
+  },
+  "errors": []
+}

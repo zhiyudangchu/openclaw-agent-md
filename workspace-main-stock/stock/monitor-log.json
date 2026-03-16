@@ -1,28 +1,48 @@
 {
-  "task_id": "cron_3a0e37bb",
-  "start_time": "2026-03-13 10:41:48",
-  "status": "completed",
+  "task_id": "3a0e37bb-8bac-4673-9d03-39d7faa392fa",
+  "task_name": "实时股价监控",
+  "execution_time": "2026-03-13 14:46:31",
+  "market_status": "交易中",
   "api_calls": [
     {
-      "interface": "trade_cal",
-      "params": {
-        "date": "20260313"
-      },
-      "result_count": 1,
-      "status": "success",
-      "time": "2026-03-13 10:41:48"
-    },
-    {
       "interface": "rt_k",
-      "params": {
+      "input": {
         "ts_code": "601857.SH,603606.SH,002600.SZ,002961.SZ,001872.SZ"
       },
-      "result_count": 5,
-      "status": "success",
-      "time": "2026-03-13 10:41:48"
+      "output": "成功获取 5 只股票数据",
+      "status": "success"
     }
   ],
-  "errors": [],
-  "alerts": [],
-  "end_time": "2026-03-13 10:41:48"
+  "data_summary": {
+    "total_stocks": 5,
+    "alert_triggered": 4,
+    "alert_stocks": [
+      {
+        "code": "002961.SZ",
+        "name": "瑞达期货",
+        "pct_chg": -5.52
+      },
+      {
+        "code": "601857.SH",
+        "name": "中国石油",
+        "pct_chg": -1.96
+      },
+      {
+        "code": "002600.SZ",
+        "name": "领益智造",
+        "pct_chg": -1.85
+      },
+      {
+        "code": "603606.SH",
+        "name": "东方电缆",
+        "pct_chg": 1.16
+      }
+    ]
+  },
+  "broadcast": {
+    "channel": "feishu",
+    "receivers_count": 7,
+    "status": "success (7/7)"
+  },
+  "errors": []
 }
